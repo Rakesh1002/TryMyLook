@@ -117,7 +117,7 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="relative min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center items-center pt-16 sm:pt-20 pb-12 sm:pb-20 px-4 sm:px-12 text-center overflow-hidden">
         {/* Background with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/80 via-secondary-50/50 to-cool-50 z-[1]">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/80 via-secondary-50/50 to-cool-50">
           {/* Bottom fade overlay */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cool-50 to-transparent" />
         </div>
@@ -138,7 +138,7 @@ export default function LandingPage() {
 
         {/* Content */}
         <motion.div
-          className="relative z-[2] max-w-6xl mx-auto"
+          className="relative z-10 max-w-6xl mx-auto"
           initial="initial"
           animate="animate"
           variants={staggerContainer}
@@ -153,7 +153,7 @@ export default function LandingPage() {
           </motion.h1>
 
           <motion.p
-            className="text-base sm:text-lg md:text-xl text-cool-600 mb-6 sm:mb-8 md:mb-12 max-w-xl sm:max-w-2xl mx-auto leading-relaxed px-2 font-medium"
+            className="text-lg sm:text-xl md:text-2xl text-cool-500 mb-6 sm:mb-8 md:mb-12 max-w-xl sm:max-w-2xl mx-auto leading-relaxed px-2 font-medium"
             variants={fadeIn}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -163,7 +163,7 @@ export default function LandingPage() {
           </motion.p>
 
           <motion.div
-            className="relative z-[2] flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 pt-4"
             variants={fadeIn}
           >
             <Link href="/demo" className="w-full sm:w-auto">
