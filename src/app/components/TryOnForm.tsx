@@ -222,13 +222,13 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8">
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-3 sm:p-4 rounded-md">
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-md">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg
-                className="h-4 w-4 sm:h-5 sm:w-5 text-red-400"
+                className="h-5 w-5 text-red-400"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -239,23 +239,23 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                 />
               </svg>
             </div>
-            <div className="ml-2 sm:ml-3">
+            <div className="ml-3">
               <p className="text-sm text-red-700">{error}</p>
             </div>
           </div>
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-12">
         {/* Apparel Section */}
-        <Card className="p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow duration-200 bg-cool-50 border-cool-200 order-1 sm:order-1">
-          <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-center text-primary-600">
+        <Card className="p-4 sm:p-6 shadow-lg hover:shadow-xl transition-shadow duration-200 bg-cool-50 border-cool-200 order-1 sm:order-1">
+          <h3 className="text-xl font-semibold mb-4 text-center text-primary-600">
             Apparel Image
           </h3>
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-4">
             <div className="aspect-[3/4] w-full flex items-center justify-center border-2 border-dashed rounded-xl border-primary-100 hover:border-primary-400 transition-colors bg-white">
               {selectedApparelPreview ? (
-                <div className="relative w-full h-full p-2 sm:p-4 flex items-center justify-center">
+                <div className="relative w-full h-full p-4 flex items-center justify-center">
                   <Image
                     src={selectedApparelPreview}
                     alt="Selected apparel"
@@ -268,16 +268,16 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                       setSelectedApparelPreview("");
                       setApparelImage(null);
                     }}
-                    className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-red-500 text-white rounded-full p-1 sm:p-1.5 text-xs shadow-lg hover:bg-red-600 transition-colors"
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 text-xs shadow-lg hover:bg-red-600 transition-colors"
                   >
                     ✕
                   </button>
                 </div>
               ) : (
                 <label htmlFor="apparelUpload" className="cursor-pointer group">
-                  <div className="flex flex-col items-center p-3 sm:p-4">
-                    <Upload className="w-8 h-8 sm:w-10 sm:h-10 mb-2 text-cool-400 group-hover:text-secondary-400 transition-colors" />
-                    <span className="text-xs sm:text-sm text-gray-500 group-hover:text-gray-700">
+                  <div className="flex flex-col items-center p-4">
+                    <Upload className="w-10 sm:w-12 h-10 sm:h-12 mb-2 text-cool-400 group-hover:text-secondary-400 transition-colors" />
+                    <span className="text-sm text-gray-500 group-hover:text-gray-700">
                       Upload Apparel Image
                     </span>
                   </div>
@@ -296,10 +296,10 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
             </div>
 
             <div>
-              <p className="text-xs sm:text-sm font-medium text-cool-500 mb-2 sm:mb-3 text-center">
+              <p className="text-sm font-medium text-cool-500 mb-3 text-center">
                 Or Select Sample Apparel
               </p>
-              <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-4 justify-center">
+              <div className="flex flex-wrap gap-1.5 mb-4 justify-center">
                 {["upper", "lower", "dress"].map((type) => (
                   <Button
                     key={type}
@@ -309,7 +309,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                     onClick={() =>
                       setSelectedApparelType(type as typeof selectedApparelType)
                     }
-                    className={`px-2 sm:px-3 py-1 sm:py-1.5 h-auto text-xs sm:text-sm transition-all duration-200 ${
+                    className={`px-2 sm:px-3 py-1.5 h-auto text-sm transition-all duration-200 ${
                       selectedApparelType === type
                         ? "bg-accent-400 text-white shadow-md hover:bg-accent-500"
                         : "text-cool-500 hover:text-cool-600 border-cool-300"
@@ -323,21 +323,21 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                 images={apparelImages[selectedApparelType]}
                 onSelect={handleApparelSelect}
                 selectedImage={selectedApparelPreview}
-                className="grid grid-cols-4 gap-1 sm:gap-2"
+                className="grid grid-cols-4 gap-2"
               />
             </div>
           </div>
         </Card>
 
         {/* Model Section */}
-        <Card className="p-3 sm:p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow duration-200 bg-cool-50 border-cool-200 order-2 sm:order-2">
-          <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-center text-primary-600">
+        <Card className="p-4 sm:p-6 shadow-lg hover:shadow-xl transition-shadow duration-200 bg-cool-50 border-cool-200 order-2 sm:order-2">
+          <h3 className="text-xl font-semibold mb-4 text-center text-primary-600">
             Model Image
           </h3>
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-4">
             <div className="aspect-[3/4] w-full flex items-center justify-center border-primary-100 border-2 border-dashed rounded-xl hover:border-primary-400 transition-colors bg-white">
               {selectedModelPreview ? (
-                <div className="relative w-full h-full p-2 sm:p-4 flex items-center justify-center">
+                <div className="relative w-full h-full p-4 flex items-center justify-center">
                   <Image
                     src={selectedModelPreview}
                     alt="Selected model"
@@ -350,16 +350,16 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                       setSelectedModelPreview("");
                       setModelImage(null);
                     }}
-                    className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-red-500 text-white rounded-full p-1 sm:p-1.5 text-xs shadow-lg hover:bg-red-600 transition-colors"
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 text-xs shadow-lg hover:bg-red-600 transition-colors"
                   >
                     ✕
                   </button>
                 </div>
               ) : (
                 <label htmlFor="modelUpload" className="cursor-pointer group">
-                  <div className="flex flex-col items-center p-3 sm:p-4">
-                    <Upload className="w-8 h-8 sm:w-10 sm:h-10 mb-2 text-cool-400 group-hover:text-secondary-400 transition-colors" />
-                    <span className="text-xs sm:text-sm text-gray-500 group-hover:text-gray-700">
+                  <div className="flex flex-col items-center p-4">
+                    <Upload className="w-10 sm:w-12 h-10 sm:h-12 mb-2 text-cool-400 group-hover:text-secondary-400 transition-colors" />
+                    <span className="text-sm text-gray-500 group-hover:text-gray-700">
                       Upload Model Image
                     </span>
                   </div>
@@ -378,7 +378,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
             </div>
 
             <div>
-              <p className="text-xs sm:text-sm font-medium text-cool-500 mb-2 sm:mb-3 text-center">
+              <p className="text-sm font-medium text-cool-500 mb-3 text-center">
                 Or Select Sample Model
               </p>
               <div className="flex gap-2 mb-4 justify-center">
@@ -411,16 +411,16 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
       </div>
 
       <Button
-        className="w-full py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold shadow-lg text-white hover:shadow-xl transition-all duration-200 relative overflow-hidden group bg-primary-500 hover:opacity-90"
+        className="w-full py-4 sm:py-6 text-base sm:text-lg font-semibold shadow-lg text-white hover:shadow-xl transition-all duration-200 relative overflow-hidden group bg-primary-500 hover:opacity-90"
         disabled={!modelImage || !apparelImage || isProcessing}
         onClick={handleSubmit}
       >
         <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <span className="relative">
           {isProcessing ? (
-            <div className="flex items-center justify-center gap-2">
-              <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-2 border-white border-t-transparent" />
-              <span>Processing...</span>
+            <div className="flex items-center gap-2 justify-center">
+              <div className="animate-spin rounded-full h-4 sm:h-5 w-4 sm:w-5 border-2 border-white border-t-transparent" />
+              Processing...
             </div>
           ) : (
             "Generate Try-On"

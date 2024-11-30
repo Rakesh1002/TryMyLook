@@ -115,9 +115,9 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-cool-50">
       {/* Hero Section */}
-      <section className="relative min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center items-center pt-16 sm:pt-20 pb-12 sm:pb-20 px-4 sm:px-12 text-center overflow-hidden">
+      <section className="relative min-h-[calc(100vh-10rem)] md:min-h-screen flex flex-col justify-center items-center pt-20 sm:pt-30 pb-20 px-12 text-center overflow-hidden">
         {/* Background with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/80 via-secondary-50/50 to-cool-50">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/50 via-secondary-50/30 to-cool-50">
           {/* Bottom fade overlay */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cool-50 to-transparent" />
         </div>
@@ -129,7 +129,7 @@ export default function LandingPage() {
             squareSize={3}
             gridGap={5}
             color="#9333ea"
-            maxOpacity={0.15}
+            maxOpacity={0.2}
             flickerChance={0.08}
             height={1200}
             width={1200}
@@ -144,7 +144,7 @@ export default function LandingPage() {
           variants={staggerContainer}
         >
           <motion.h1
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-500 bg-clip-text text-transparent px-2 [text-shadow:0_2px_2px_rgba(0,0,0,0.1)]"
+            className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 bg-clip-text text-transparent"
             variants={fadeIn}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -153,7 +153,7 @@ export default function LandingPage() {
           </motion.h1>
 
           <motion.p
-            className="text-lg sm:text-xl md:text-2xl text-cool-500 mb-6 sm:mb-8 md:mb-12 max-w-xl sm:max-w-2xl mx-auto leading-relaxed px-2 font-medium"
+            className="text-lg sm:text-xl md:text-2xl text-cool-500 mb-10 sm:mb-16 max-w-2xl mx-auto leading-relaxed"
             variants={fadeIn}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -163,7 +163,7 @@ export default function LandingPage() {
           </motion.p>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 pt-4"
+            className="flex flex-col sm:flex-row gap-4 justify-center"
             variants={fadeIn}
           >
             <Link href="/demo" className="w-full sm:w-auto">
@@ -176,10 +176,10 @@ export default function LandingPage() {
                 <ShimmerButton>
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-primary-500 to-secondary-400 hover:opacity-90 text-white px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group"
+                    className="w-full sm:w-auto bg-gradient-to-r from-primary-500 to-secondary-400 hover:opacity-90 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group"
                   >
                     Try Demo{" "}
-                    <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </ShimmerButton>
               </motion.div>
@@ -222,8 +222,13 @@ export default function LandingPage() {
       </section>
 
       {/* Stats Section */}
-      <motion.section className="py-12 sm:py-20 bg-white w-full">
-        <div className="max-w-6xl mx-auto px-4 sm:px-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+      <motion.section
+        className="py-20 bg-white"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        <div className="max-w-6xl mx-auto px-12 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
               title: "40%",
@@ -285,10 +290,10 @@ export default function LandingPage() {
       </motion.section>
 
       {/* Features Section with Multiple Examples */}
-      <section className="py-12 sm:py-20 px-4 sm:px-12 bg-gradient-to-b from-white to-cool-50">
+      <section className="py-20 px-12 bg-gradient-to-b from-white to-cool-50">
         <div className="max-w-6xl mx-auto">
           <motion.h2
-            className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16 bg-gradient-to-r from-primary-500 to-secondary-400 bg-clip-text text-transparent"
+            className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-primary-500 to-secondary-400 bg-clip-text text-transparent"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -297,7 +302,7 @@ export default function LandingPage() {
           </motion.h2>
 
           {/* Example 1: Enhanced Customer Experience */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center mb-12 sm:mb-16 md:mb-32">
+          <div className="grid md:grid-cols-2 gap-16 items-center mb-32">
             <motion.div
               className="rounded-2xl overflow-hidden shadow-2xl"
               initial={{ opacity: 0, x: -50 }}
@@ -325,16 +330,17 @@ export default function LandingPage() {
                 This helps to reduce uncertainty and increase confidence in
                 their buying decisions.
               </p>
-              <Link href="#contact">
-                <Button className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300">
-                  Request Access
-                </Button>
-              </Link>
+              <Button
+                asChild
+                className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300"
+              >
+                <Link href="#contact">Request Access</Link>
+              </Button>
             </motion.div>
           </div>
 
           {/* Example 2: Increased Conversion */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center mb-12 sm:mb-16 md:mb-32">
+          <div className="grid md:grid-cols-2 gap-16 items-center mb-32">
             <motion.div
               className="space-y-6 order-2 md:order-1"
               initial={{ opacity: 0, x: -50 }}
@@ -349,11 +355,12 @@ export default function LandingPage() {
                 to try on products, brands increase conversion rates from the
                 view page to purchases.
               </p>
-              <Link href="#contact">
-                <Button className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300">
-                  Request Access
-                </Button>
-              </Link>
+              <Button
+                asChild
+                className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300"
+              >
+                <Link href="#contact">Request Access</Link>
+              </Button>
             </motion.div>
             <motion.div
               className="rounded-2xl overflow-hidden shadow-2xl order-1 md:order-2"
@@ -369,7 +376,7 @@ export default function LandingPage() {
           </div>
 
           {/* Example 3: Reduced Returns */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center mb-12 sm:mb-16 md:mb-32">
+          <div className="grid md:grid-cols-2 gap-16 items-center mb-32">
             <motion.div
               className="rounded-2xl overflow-hidden shadow-2xl"
               initial={{ opacity: 0, x: -50 }}
@@ -394,16 +401,17 @@ export default function LandingPage() {
                 Virtual try-ons can help to reduce the number of returns and
                 save time and costs associated with processing the returns.
               </p>
-              <Link href="#contact">
-                <Button className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300">
-                  Request Access
-                </Button>
-              </Link>
+              <Button
+                asChild
+                className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300"
+              >
+                <Link href="#contact">Request Access</Link>
+              </Button>
             </motion.div>
           </div>
 
           {/* Example 4: Stand Out */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div
               className="space-y-6 order-2 md:order-1"
               initial={{ opacity: 0, x: -50 }}
@@ -418,11 +426,12 @@ export default function LandingPage() {
                 differentiate themselves from competitors and stand out in the
                 increasingly crowded market.
               </p>
-              <Link href="#contact">
-                <Button className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300">
-                  Request Access
-                </Button>
-              </Link>
+              <Button
+                asChild
+                className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300"
+              >
+                <Link href="#contact">Request Access</Link>
+              </Button>
             </motion.div>
             <motion.div
               className="rounded-2xl overflow-hidden shadow-2xl order-1 md:order-2"
@@ -493,13 +502,13 @@ export default function LandingPage() {
       {/* Contact Section */}
       <motion.section
         id="contact"
-        className="py-12 sm:py-20 px-4 bg-gradient-to-b from-cool-50 to-white"
+        className="py-20 px-4 bg-gradient-to-b from-cool-50 to-white pt-20"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
       >
-        <div className="max-w-xl sm:max-w-2xl mx-auto px-4 sm:px-12 pt-12 sm:pt-20">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-center bg-gradient-to-r from-primary-500 to-secondary-400 bg-clip-text text-transparent">
+        <div className="max-w-2xl mx-auto px-12 pt-20">
+          <h2 className="text-3xl font-bold mb-2 text-center bg-gradient-to-r from-primary-500 to-secondary-400 bg-clip-text text-transparent">
             Get Started Today
           </h2>
           <p className="text-cool-500 text-center mb-8">
