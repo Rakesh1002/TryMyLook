@@ -1,11 +1,11 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../node_modules/.prisma/client"
+  previewFeatures = []
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
 }
 
 model ContactSubmission {
@@ -13,6 +13,6 @@ model ContactSubmission {
   companyName String
   email       String
   message     String
-  createdAt   DateTime @default(now())
   status      String   @default("pending")
+  createdAt   DateTime @default(now())
 }

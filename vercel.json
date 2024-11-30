@@ -4,8 +4,12 @@
       "src": "package.json",
       "use": "@vercel/next",
       "config": {
-        "installCommand": "npm install --force"
+        "installCommand": "npm install --force",
+        "buildCommand": "prisma generate && next build"
       }
     }
-  ]
+  ],
+  "env": {
+    "PRISMA_GENERATE_DATAPROXY": "true"
+  }
 }
