@@ -6,6 +6,7 @@ import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 const modelImages = {
   male: [
@@ -74,7 +75,6 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
   const [error, setError] = useState<string | null>(null);
 
   const handleModelSelect = async (imagePath: string) => {
-    console.log("TryOnForm: Selecting model image:", imagePath);
     try {
       // Set preview immediately for better UX
       setSelectedModelPreview(imagePath);
@@ -95,7 +95,6 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
       const blob = await response.blob();
       const file = new File([blob], "model.png", { type: "image/png" });
       setModelImage(file);
-      console.log("TryOnForm: Successfully set model image");
     } catch (error) {
       console.error("TryOnForm: Error selecting model:", error);
       setSelectedModelPreview("");
@@ -104,7 +103,6 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
   };
 
   const handleApparelSelect = async (imagePath: string) => {
-    console.log("TryOnForm: Selecting apparel image:", imagePath);
     try {
       // Set preview immediately for better UX
       setSelectedApparelPreview(imagePath);
@@ -125,7 +123,6 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
       const blob = await response.blob();
       const file = new File([blob], "apparel.png", { type: "image/png" });
       setApparelImage(file);
-      console.log("TryOnForm: Successfully set apparel image");
     } catch (error) {
       console.error("TryOnForm: Error selecting apparel:", error);
       setSelectedApparelPreview("");
@@ -135,15 +132,14 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!modelImage || !apparelImage) {
-      setError("Please select both a model and an apparel image");
-      return;
-    }
-
     setIsProcessing(true);
     setError(null);
 
     try {
+      if (!modelImage || !apparelImage) {
+        throw new Error("Please select both model and apparel images");
+      }
+
       const formData = new FormData();
       formData.append("requestType", "tryon");
       formData.append("modelImage", modelImage);
@@ -154,11 +150,27 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
         body: formData,
       });
 
-      const result = await response.json();
+      if (response.status === 429) {
+        const data = await response.json();
+        if (data.contactSales) {
+          toast.error(data.error, {
+            action: {
+              label: "Contact Sales",
+              onClick: () =>
+                (window.location.href = "mailto:contact@getmytry.com"),
+            },
+          });
+        } else {
+          toast.error(data.error);
+        }
+        throw new Error(data.error);
+      }
 
       if (!response.ok) {
-        throw new Error(result.error || "Failed to process images");
+        throw new Error("Failed to process images");
       }
+
+      const result = await response.json();
 
       if (result.result) {
         // Store the result in local storage with timestamp
@@ -185,18 +197,21 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
 
         onResult(result.result);
       }
+
+      // Show remaining trials after successful generation
+      const remaining = response.headers.get("X-RateLimit-Remaining");
+      if (remaining) {
+        toast.success(`${remaining} trial generations remaining`);
+      }
     } catch (error) {
-      console.error("Error processing images:", error);
-      setError(
-        error instanceof Error ? error.message : "Failed to process images"
-      );
+      console.error("Error:", error);
+      setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setIsProcessing(false);
     }
   };
 
   const handleFileUpload = (type: "model" | "apparel", file: File) => {
-    console.log(`TryOnForm: Handling ${type} file upload`);
     if (type === "model") {
       setModelImage(file);
       setSelectedModelPreview(URL.createObjectURL(file));

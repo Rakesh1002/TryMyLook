@@ -46,7 +46,6 @@ export async function POST(req: Request) {
       !process.env.AZURE_CLIENT_ID ||
       !process.env.AZURE_CLIENT_SECRET
     ) {
-      console.error("Missing Azure credentials");
       return NextResponse.json(
         { error: "Server configuration error" },
         { status: 500 }
@@ -55,11 +54,6 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const { companyName, email, message } = body;
-
-    console.log("Starting contact form submission process...", {
-      companyName,
-      email,
-    });
 
     // First, store in database
     let submission;
@@ -75,9 +69,7 @@ export async function POST(req: Request) {
           status: "pending",
         },
       });
-      console.log("Successfully stored in database:", submission);
     } catch (dbError) {
-      console.error("Database error:", dbError);
       throw new Error(
         `Failed to store submission in database: ${
           dbError instanceof Error ? dbError.message : "Unknown error"
@@ -88,16 +80,8 @@ export async function POST(req: Request) {
       await prisma.$disconnect();
     }
 
-    console.log("Attempting to send email with credentials:", {
-      tenantId: process.env.AZURE_TENANT_ID,
-      clientId: process.env.AZURE_CLIENT_ID,
-      // Log partial secret for debugging
-      clientSecret: process.env.AZURE_CLIENT_SECRET?.substring(0, 5) + "...",
-    });
-
     // Verify email configuration
     if (!process.env.SENDER_EMAIL || !process.env.NOTIFICATION_EMAIL) {
-      console.error("Missing email configuration");
       throw new Error("Email configuration is missing");
     }
 
@@ -174,7 +158,6 @@ export async function POST(req: Request) {
         });
 
       // Send confirmation email to user
-      console.log("Sending confirmation email to:", email);
       try {
         await graphClient
           .api(`/users/${process.env.SENDER_EMAIL}/sendMail`)

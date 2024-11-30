@@ -11,11 +11,19 @@ interface ResultDisplayProps {
 }
 
 export default function ResultDisplay({ outputUrl }: ResultDisplayProps) {
-  // Removed isExpanded state
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
-    setImageLoaded(false);
+    if (outputUrl) {
+      setImageLoaded(false);
+      setImageError(false);
+      // Preload image
+      const img = new window.Image();
+      img.src = outputUrl;
+      img.onload = () => setImageLoaded(true);
+      img.onerror = () => setImageError(true);
+    }
   }, [outputUrl]);
 
   if (!outputUrl) {
@@ -39,28 +47,40 @@ export default function ResultDisplay({ outputUrl }: ResultDisplayProps) {
     }
   };
 
-  // Removed handleExpand function
-
   return (
     <Card>
       <CardContent className="p-4">
         <h2 className="text-2xl font-semibold mb-4">Result</h2>
-        <div className="relative inline-block w-full">
-          {!imageLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              Loading...
+        <div className="relative inline-block w-full min-h-[400px]">
+          {!imageLoaded && !imageError && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-50 rounded-lg">
+              <div className="flex flex-col items-center gap-3">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent" />
+                <p className="text-gray-500">Generating your try-on...</p>
+              </div>
             </div>
           )}
-          <Image
-            src={outputUrl}
-            alt="Virtual Try-On Result"
-            width={800}
-            height={1200}
-            className={`rounded-lg shadow-md w-full ${
-              imageLoaded ? "" : "hidden"
-            }`}
-            onLoad={() => setImageLoaded(true)}
-          />
+          {imageError && (
+            <div className="absolute inset-0 flex items-center justify-center bg-red-50 rounded-lg">
+              <p className="text-red-500">
+                Failed to load the result. Please try again.
+              </p>
+            </div>
+          )}
+          {outputUrl && (
+            <Image
+              src={outputUrl}
+              alt="Virtual Try-On Result"
+              width={800}
+              height={1200}
+              className={`rounded-lg shadow-md w-full ${
+                !imageLoaded ? "hidden" : ""
+              }`}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageError(true)}
+              priority
+            />
+          )}
           {imageLoaded && (
             <div className="absolute top-2 right-2 space-x-2">
               <Button
