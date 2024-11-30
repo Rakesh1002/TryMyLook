@@ -115,9 +115,9 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-cool-50">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center pt-16 sm:pt-20 pb-12 sm:pb-20 px-4 sm:px-12 text-center overflow-hidden">
+      <section className="relative min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center items-center pt-16 sm:pt-20 pb-12 sm:pb-20 px-4 sm:px-12 text-center overflow-hidden">
         {/* Background with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/50 via-secondary-50/30 to-cool-50">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/80 via-secondary-50/50 to-cool-50 z-[1]">
           {/* Bottom fade overlay */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cool-50 to-transparent" />
         </div>
@@ -129,7 +129,7 @@ export default function LandingPage() {
             squareSize={3}
             gridGap={5}
             color="#9333ea"
-            maxOpacity={0.2}
+            maxOpacity={0.15}
             flickerChance={0.08}
             height={1200}
             width={1200}
@@ -138,13 +138,13 @@ export default function LandingPage() {
 
         {/* Content */}
         <motion.div
-          className="relative z-10 max-w-6xl mx-auto"
+          className="relative z-[2] max-w-6xl mx-auto"
           initial="initial"
           animate="animate"
           variants={staggerContainer}
         >
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 bg-clip-text text-transparent px-2"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-500 bg-clip-text text-transparent px-2 [text-shadow:0_2px_2px_rgba(0,0,0,0.1)]"
             variants={fadeIn}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -153,7 +153,7 @@ export default function LandingPage() {
           </motion.h1>
 
           <motion.p
-            className="text-base sm:text-lg md:text-xl text-cool-500 mb-6 sm:mb-8 md:mb-12 max-w-xl sm:max-w-2xl mx-auto leading-relaxed px-2"
+            className="text-base sm:text-lg md:text-xl text-cool-600 mb-6 sm:mb-8 md:mb-12 max-w-xl sm:max-w-2xl mx-auto leading-relaxed px-2 font-medium"
             variants={fadeIn}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -163,7 +163,7 @@ export default function LandingPage() {
           </motion.p>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 pt-4"
+            className="relative z-[2] flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
             variants={fadeIn}
           >
             <Link href="/demo" className="w-full sm:w-auto">
