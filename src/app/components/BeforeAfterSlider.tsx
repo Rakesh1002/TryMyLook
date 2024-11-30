@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+import { useState, useRef } from "react";
+import Image from "next/image";
 
 interface BeforeAfterSliderProps {
   beforeImage: string;
@@ -13,8 +13,8 @@ interface BeforeAfterSliderProps {
 export default function BeforeAfterSlider({
   beforeImage,
   afterImage,
-  beforeLabel = 'Before',
-  afterLabel = 'After',
+  beforeLabel = "Before",
+  afterLabel = "After",
 }: BeforeAfterSliderProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,7 +24,7 @@ export default function BeforeAfterSlider({
 
     const rect = containerRef.current.getBoundingClientRect();
     const x =
-      'touches' in event
+      "touches" in event
         ? event.touches[0].clientX - rect.left
         : event.clientX - rect.left;
 

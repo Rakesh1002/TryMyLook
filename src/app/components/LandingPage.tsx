@@ -3,19 +3,8 @@
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import { Button } from "../../components/ui/button";
 import Link from "next/link";
-import { motion, useAnimationControls } from "framer-motion";
-import {
-  ArrowRight,
-  ShoppingBag,
-  TrendingUp,
-  RefreshCcw,
-  Zap,
-  Shirt,
-  Github,
-  Twitter,
-  Linkedin,
-  Mail,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, TrendingUp, RefreshCcw, Zap } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 

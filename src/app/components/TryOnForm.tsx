@@ -1,55 +1,55 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import ImageSelector from './ImageSelector';
-import { Card } from '../../components/ui/card';
-import { Button } from '../../components/ui/button';
-import { Upload } from 'lucide-react';
+import { useState } from "react";
+import ImageSelector from "./ImageSelector";
+import { Card } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
+import { Upload } from "lucide-react";
 
 const modelImages = {
   male: [
-    '/images/models/male/1.png',
-    '/images/models/male/9.png',
-    '/images/models/male/3.png',
-    '/images/models/male/4.png',
-    '/images/models/male/5.png',
-    '/images/models/male/6.png',
-    '/images/models/male/7.png',
-    '/images/models/male/8.png',
+    "/images/models/male/1.png",
+    "/images/models/male/9.png",
+    "/images/models/male/3.png",
+    "/images/models/male/4.png",
+    "/images/models/male/5.png",
+    "/images/models/male/6.png",
+    "/images/models/male/7.png",
+    "/images/models/male/8.png",
   ],
   female: [
-    '/images/models/female/1.png',
-    '/images/models/female/9.png',
-    '/images/models/female/3.png',
-    '/images/models/female/11.png',
-    '/images/models/female/5.png',
-    '/images/models/female/10.png',
-    '/images/models/female/12.png',
-    '/images/models/female/8.png',
+    "/images/models/female/1.png",
+    "/images/models/female/9.png",
+    "/images/models/female/3.png",
+    "/images/models/female/11.png",
+    "/images/models/female/5.png",
+    "/images/models/female/10.png",
+    "/images/models/female/12.png",
+    "/images/models/female/8.png",
   ],
 };
 
 const apparelImages = {
   dress: [
-    '/images/apparel/dress/1.png',
-    '/images/apparel/dress/2.png',
-    '/images/apparel/dress/3.png',
+    "/images/apparel/dress/1.png",
+    "/images/apparel/dress/2.png",
+    "/images/apparel/dress/3.png",
   ],
   upper: [
-    '/images/apparel/upper/1.png',
-    '/images/apparel/upper/2.png',
-    '/images/apparel/upper/3.png',
-    '/images/apparel/upper/4.png',
-    '/images/apparel/upper/5.png',
-    '/images/apparel/upper/6.png',
-    '/images/apparel/upper/7.png',
-    '/images/apparel/upper/8.png',
+    "/images/apparel/upper/1.png",
+    "/images/apparel/upper/2.png",
+    "/images/apparel/upper/3.png",
+    "/images/apparel/upper/4.png",
+    "/images/apparel/upper/5.png",
+    "/images/apparel/upper/6.png",
+    "/images/apparel/upper/7.png",
+    "/images/apparel/upper/8.png",
   ],
   lower: [
-    '/images/apparel/lower/1.png',
-    '/images/apparel/lower/2.png',
-    '/images/apparel/lower/3.png',
-    '/images/apparel/lower/4.png',
+    "/images/apparel/lower/1.png",
+    "/images/apparel/lower/2.png",
+    "/images/apparel/lower/3.png",
+    "/images/apparel/lower/4.png",
   ],
 };
 
@@ -58,49 +58,22 @@ interface TryOnFormProps {
 }
 
 export default function TryOnForm({ onResult }: TryOnFormProps) {
-  const [selectedGender, setSelectedGender] = useState<'male' | 'female'>(
-    'male'
+  const [selectedGender, setSelectedGender] = useState<"male" | "female">(
+    "male"
   );
   const [selectedApparelType, setSelectedApparelType] = useState<
-    'upper' | 'lower' | 'dress'
-  >('upper');
+    "upper" | "lower" | "dress"
+  >("upper");
   const [modelImage, setModelImage] = useState<File | null>(null);
   const [apparelImage, setApparelImage] = useState<File | null>(null);
-  const [selectedModelPreview, setSelectedModelPreview] = useState<string>('');
+  const [selectedModelPreview, setSelectedModelPreview] = useState<string>("");
   const [selectedApparelPreview, setSelectedApparelPreview] =
-    useState<string>('');
+    useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const convertUrlToFile = async (
-    url: string,
-    fileName: string
-  ): Promise<File> => {
-    try {
-      const fullUrl = url.startsWith('http')
-        ? url
-        : window.location.origin + url;
-      console.log('Fetching image from:', fullUrl);
-
-      const response = await fetch(fullUrl);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch image: ${response.statusText}`);
-      }
-
-      const blob = await response.blob();
-      if (!blob) {
-        throw new Error('Failed to get blob from response');
-      }
-
-      return new File([blob], fileName, { type: blob.type || 'image/png' });
-    } catch (error) {
-      console.error('Error converting URL to File:', error);
-      throw error;
-    }
-  };
-
   const handleModelSelect = async (imagePath: string) => {
-    console.log('TryOnForm: Selecting model image:', imagePath);
+    console.log("TryOnForm: Selecting model image:", imagePath);
     try {
       // Set preview immediately for better UX
       setSelectedModelPreview(imagePath);
@@ -116,21 +89,21 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
 
       // Fetch the image as a blob
       const response = await fetch(imagePath);
-      if (!response.ok) throw new Error('Failed to fetch image');
+      if (!response.ok) throw new Error("Failed to fetch image");
 
       const blob = await response.blob();
-      const file = new File([blob], 'model.png', { type: 'image/png' });
+      const file = new File([blob], "model.png", { type: "image/png" });
       setModelImage(file);
-      console.log('TryOnForm: Successfully set model image');
+      console.log("TryOnForm: Successfully set model image");
     } catch (error) {
-      console.error('TryOnForm: Error selecting model:', error);
-      setSelectedModelPreview('');
+      console.error("TryOnForm: Error selecting model:", error);
+      setSelectedModelPreview("");
       setModelImage(null);
     }
   };
 
   const handleApparelSelect = async (imagePath: string) => {
-    console.log('TryOnForm: Selecting apparel image:', imagePath);
+    console.log("TryOnForm: Selecting apparel image:", imagePath);
     try {
       // Set preview immediately for better UX
       setSelectedApparelPreview(imagePath);
@@ -146,15 +119,15 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
 
       // Fetch the image as a blob
       const response = await fetch(imagePath);
-      if (!response.ok) throw new Error('Failed to fetch image');
+      if (!response.ok) throw new Error("Failed to fetch image");
 
       const blob = await response.blob();
-      const file = new File([blob], 'apparel.png', { type: 'image/png' });
+      const file = new File([blob], "apparel.png", { type: "image/png" });
       setApparelImage(file);
-      console.log('TryOnForm: Successfully set apparel image');
+      console.log("TryOnForm: Successfully set apparel image");
     } catch (error) {
-      console.error('TryOnForm: Error selecting apparel:', error);
-      setSelectedApparelPreview('');
+      console.error("TryOnForm: Error selecting apparel:", error);
+      setSelectedApparelPreview("");
       setApparelImage(null);
     }
   };
@@ -162,7 +135,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!modelImage || !apparelImage) {
-      setError('Please select both a model and an apparel image');
+      setError("Please select both a model and an apparel image");
       return;
     }
 
@@ -171,19 +144,19 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
 
     try {
       const formData = new FormData();
-      formData.append('requestType', 'tryon');
-      formData.append('modelImage', modelImage);
-      formData.append('apparelImage', apparelImage);
+      formData.append("requestType", "tryon");
+      formData.append("modelImage", modelImage);
+      formData.append("apparelImage", apparelImage);
 
-      const response = await fetch('/api/try-on', {
-        method: 'POST',
+      const response = await fetch("/api/try-on", {
+        method: "POST",
         body: formData,
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to process images');
+        throw new Error(result.error || "Failed to process images");
       }
 
       if (result.result) {
@@ -197,7 +170,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
 
         // Get existing results or initialize empty array
         const existingResults = JSON.parse(
-          localStorage.getItem('tryOnResults') || '[]'
+          localStorage.getItem("tryOnResults") || "[]"
         );
 
         // Add new result at the beginning
@@ -207,23 +180,23 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
         const updatedResults = existingResults.slice(0, 10);
 
         // Save back to local storage
-        localStorage.setItem('tryOnResults', JSON.stringify(updatedResults));
+        localStorage.setItem("tryOnResults", JSON.stringify(updatedResults));
 
         onResult(result.result);
       }
     } catch (error) {
-      console.error('Error processing images:', error);
+      console.error("Error processing images:", error);
       setError(
-        error instanceof Error ? error.message : 'Failed to process images'
+        error instanceof Error ? error.message : "Failed to process images"
       );
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const handleFileUpload = (type: 'model' | 'apparel', file: File) => {
+  const handleFileUpload = (type: "model" | "apparel", file: File) => {
     console.log(`TryOnForm: Handling ${type} file upload`);
-    if (type === 'model') {
+    if (type === "model") {
       setModelImage(file);
       setSelectedModelPreview(URL.createObjectURL(file));
     } else {
@@ -274,7 +247,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                   />
                   <button
                     onClick={() => {
-                      setSelectedApparelPreview('');
+                      setSelectedApparelPreview("");
                       setApparelImage(null);
                     }}
                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 text-xs shadow-lg hover:bg-red-600 transition-colors"
@@ -297,7 +270,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                 accept="image/*"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
-                  if (file) handleFileUpload('apparel', file);
+                  if (file) handleFileUpload("apparel", file);
                 }}
                 className="hidden"
                 id="apparelUpload"
@@ -309,19 +282,19 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                 Or Select Sample Apparel
               </p>
               <div className="flex flex-wrap gap-1.5 mb-4 justify-center">
-                {['upper', 'lower', 'dress'].map((type) => (
+                {["upper", "lower", "dress"].map((type) => (
                   <Button
                     key={type}
                     variant={
-                      selectedApparelType === type ? 'default' : 'outline'
+                      selectedApparelType === type ? "default" : "outline"
                     }
                     onClick={() =>
                       setSelectedApparelType(type as typeof selectedApparelType)
                     }
                     className={`px-2 sm:px-3 py-1.5 h-auto text-sm transition-all duration-200 ${
                       selectedApparelType === type
-                        ? 'bg-accent-400 text-white shadow-md hover:bg-accent-500'
-                        : 'text-cool-500 hover:text-cool-600 border-cool-300'
+                        ? "bg-accent-400 text-white shadow-md hover:bg-accent-500"
+                        : "text-cool-500 hover:text-cool-600 border-cool-300"
                     }`}
                   >
                     {type}
@@ -354,7 +327,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                   />
                   <button
                     onClick={() => {
-                      setSelectedModelPreview('');
+                      setSelectedModelPreview("");
                       setModelImage(null);
                     }}
                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 text-xs shadow-lg hover:bg-red-600 transition-colors"
@@ -377,7 +350,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                 accept="image/*"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
-                  if (file) handleFileUpload('model', file);
+                  if (file) handleFileUpload("model", file);
                 }}
                 className="hidden"
                 id="modelUpload"
@@ -389,17 +362,17 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                 Or Select Sample Model
               </p>
               <div className="flex gap-2 mb-4 justify-center">
-                {['male', 'female'].map((gender) => (
+                {["male", "female"].map((gender) => (
                   <Button
                     key={gender}
-                    variant={selectedGender === gender ? 'default' : 'outline'}
+                    variant={selectedGender === gender ? "default" : "outline"}
                     onClick={() =>
                       setSelectedGender(gender as typeof selectedGender)
                     }
                     className={`px-3 sm:px-4 py-1.5 h-auto text-sm transition-all duration-200 ${
                       selectedGender === gender
-                        ? 'bg-secondary-400 text-white shadow-md hover:bg-secondary-500'
-                        : 'text-cool-500 hover:text-cool-600 border-cool-300'
+                        ? "bg-secondary-400 text-white shadow-md hover:bg-secondary-500"
+                        : "text-cool-500 hover:text-cool-600 border-cool-300"
                     }`}
                   >
                     {gender}
@@ -430,7 +403,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
               Processing...
             </div>
           ) : (
-            'Generate Try-On'
+            "Generate Try-On"
           )}
         </span>
       </Button>

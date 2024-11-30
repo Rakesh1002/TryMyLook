@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { FaDownload, FaExpand, FaCompress } from 'react-icons/fa';
-import { Card, CardContent } from '../../components/ui/card';
-import { Button } from '../../components/ui/button';
+import { useState, useEffect } from "react";
+import { FaDownload } from "react-icons/fa";
+import { Card, CardContent } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 
 interface ResultDisplayProps {
   outputUrl: string | null;
@@ -27,15 +26,15 @@ export default function ResultDisplay({ outputUrl }: ResultDisplayProps) {
       const response = await fetch(outputUrl);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.download = 'virtual-try-on-result.jpg';
+      link.download = "virtual-try-on-result.jpg";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Download failed:', error);
+      console.error("Download failed:", error);
     }
   };
 
@@ -55,7 +54,7 @@ export default function ResultDisplay({ outputUrl }: ResultDisplayProps) {
             src={outputUrl}
             alt="Virtual Try-On Result"
             className={`rounded-lg shadow-md w-full ${
-              imageLoaded ? '' : 'hidden'
+              imageLoaded ? "" : "hidden"
             }`}
             onLoad={() => setImageLoaded(true)}
           />

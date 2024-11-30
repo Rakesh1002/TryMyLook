@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { format, formatDistanceToNow } from 'date-fns';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Download } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { motion, AnimatePresence } from "framer-motion";
+import { Trash2, Download } from "lucide-react";
 
 interface TryOnResult {
   outputUrl: string;
@@ -18,7 +18,7 @@ export default function ResultHistory() {
   useEffect(() => {
     // Load results from localStorage
     const loadResults = () => {
-      const storedResults = localStorage.getItem('tryOnResults');
+      const storedResults = localStorage.getItem("tryOnResults");
       if (storedResults) {
         setResults(JSON.parse(storedResults));
       }
@@ -28,16 +28,16 @@ export default function ResultHistory() {
     loadResults();
 
     // Add event listener for storage changes
-    window.addEventListener('storage', loadResults);
+    window.addEventListener("storage", loadResults);
 
     return () => {
-      window.removeEventListener('storage', loadResults);
+      window.removeEventListener("storage", loadResults);
     };
   }, []);
 
   const handleDelete = (index: number) => {
     const newResults = results.filter((_, i) => i !== index);
-    localStorage.setItem('tryOnResults', JSON.stringify(newResults));
+    localStorage.setItem("tryOnResults", JSON.stringify(newResults));
     setResults(newResults);
   };
 
@@ -46,7 +46,7 @@ export default function ResultHistory() {
       const response = await fetch(url);
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = blobUrl;
       link.download = `try-on-result-${index + 1}.png`;
       document.body.appendChild(link);
@@ -54,7 +54,7 @@ export default function ResultHistory() {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
-      console.error('Error downloading image:', error);
+      console.error("Error downloading image:", error);
     }
   };
 
@@ -69,7 +69,7 @@ export default function ResultHistory() {
           Previous Try-Ons
         </h2>
         <span className="text-sm text-gray-500">
-          {results.length} {results.length === 1 ? 'result' : 'results'}
+          {results.length} {results.length === 1 ? "result" : "results"}
         </span>
       </div>
 

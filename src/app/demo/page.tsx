@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import TryOnForm from '../components/TryOnForm';
-import ResultDisplay from '../components/ResultDisplay';
-import ResultHistory from '../components/ResultHistory';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import TryOnForm from "../components/TryOnForm";
+import ResultDisplay from "../components/ResultDisplay";
+import ResultHistory from "../components/ResultHistory";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function DemoPage() {
   const [result, setResult] = useState<string | null>(null);
@@ -87,13 +87,13 @@ export default function DemoPage() {
             transition={{ delay: 0.4 }}
           >
             <p>
-              Note: This is a demo version. For enterprise solutions,{' '}
-              <a
+              Note: This is a demo version. For enterprise solutions,{" "}
+              <Link
                 href="/#contact"
                 className="text-primary-500 hover:text-primary-600 underline decoration-2 decoration-primary-200 underline-offset-4"
               >
                 contact our sales team
-              </a>
+              </Link>
             </p>
           </motion.div>
         </motion.div>
