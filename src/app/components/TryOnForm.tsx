@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import ImageSelector from "./ImageSelector";
-import { Card } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
+import { Card } from "./ui/card";
+import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
+import Image from "next/image";
 
 const modelImages = {
   male: [
@@ -79,7 +80,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
       setSelectedModelPreview(imagePath);
 
       // Create a new Image to ensure it loads
-      const img = new Image();
+      const img = new window.Image();
       img.src = imagePath;
 
       await new Promise((resolve, reject) => {
@@ -109,7 +110,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
       setSelectedApparelPreview(imagePath);
 
       // Create a new Image to ensure it loads
-      const img = new Image();
+      const img = new window.Image();
       img.src = imagePath;
 
       await new Promise((resolve, reject) => {
@@ -237,12 +238,14 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
             Apparel Image
           </h3>
           <div className="space-y-4">
-            <div className="aspect-[3/4] w-full flex items-center justify-center border-2 border-dashed rounded-xl hover:border-secondary-300 transition-colors bg-white">
+            <div className="aspect-[3/4] w-full flex items-center justify-center border-2 border-dashed rounded-xl border-primary-100 hover:border-primary-400 transition-colors bg-white">
               {selectedApparelPreview ? (
                 <div className="relative w-full h-full p-4 flex items-center justify-center">
-                  <img
+                  <Image
                     src={selectedApparelPreview}
                     alt="Selected apparel"
+                    width={400}
+                    height={400}
                     className="max-w-full max-h-full object-contain"
                   />
                   <button
@@ -317,12 +320,14 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
             Model Image
           </h3>
           <div className="space-y-4">
-            <div className="aspect-[3/4] w-full flex items-center justify-center border-2 border-dashed rounded-xl hover:border-secondary-300 transition-colors bg-white">
+            <div className="aspect-[3/4] w-full flex items-center justify-center border-primary-100 border-2 border-dashed rounded-xl hover:border-primary-400 transition-colors bg-white">
               {selectedModelPreview ? (
                 <div className="relative w-full h-full p-4 flex items-center justify-center">
-                  <img
+                  <Image
                     src={selectedModelPreview}
                     alt="Selected model"
+                    width={400}
+                    height={400}
                     className="max-w-full max-h-full object-contain"
                   />
                   <button
@@ -391,7 +396,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
       </div>
 
       <Button
-        className="w-full py-4 sm:py-6 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 relative overflow-hidden group bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 hover:opacity-90"
+        className="w-full py-4 sm:py-6 text-base sm:text-lg font-semibold shadow-lg text-white hover:shadow-xl transition-all duration-200 relative overflow-hidden group bg-primary-500 hover:opacity-90"
         disabled={!modelImage || !apparelImage || isProcessing}
         onClick={handleSubmit}
       >

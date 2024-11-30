@@ -22,6 +22,10 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        ananda: ["Ananda Black", "sans-serif"],
+        crimson: ["var(--font-crimson)"],
+      },
       colors: {
         // Main brand color - Electric Purple
         primary: {
@@ -74,6 +78,11 @@ const config = {
           400: "#4ade80",
           500: "#22c55e",
         },
+        "--color-1": "270deg 95% 75%",
+        "--color-2": "295deg 95% 75%",
+        "--color-3": "180deg 95% 75%",
+        "--color-4": "15deg 95% 75%",
+        "--color-5": "320deg 95% 75%",
       },
       keyframes: {
         "accordion-down": {
@@ -84,10 +93,16 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        rainbow: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        rainbow: "rainbow 3s linear infinite",
       },
     },
   },

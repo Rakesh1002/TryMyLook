@@ -1,12 +1,14 @@
 "use client";
 
 import BeforeAfterSlider from "./BeforeAfterSlider";
-import { Button } from "../../components/ui/button";
+import { Button } from "./ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp, RefreshCcw, Zap } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import FlickeringGrid from "../components/ui/FlickeringGrid";
+import { GradientText } from "../components/ui/GradientText";
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -20,6 +22,11 @@ const staggerContainer = {
       staggerChildren: 0.2,
     },
   },
+};
+
+const buttonHover = {
+  hover: { scale: 1.05, transition: { duration: 0.2 } },
+  tap: { scale: 0.95 },
 };
 
 // Add this shimmer animation component
@@ -41,6 +48,26 @@ function ShimmerButton({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
+// Add new animation variants
+const statCardVariants = {
+  initial: { scale: 1 },
+  hover: {
+    scale: 1.05,
+    boxShadow:
+      "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+    transition: { type: "spring", stiffness: 300, damping: 15 },
+  },
+  tap: { scale: 0.95 },
+};
+
+const iconVariants = {
+  initial: { rotate: 0 },
+  hover: {
+    rotate: [0, -10, 10, -10, 10, 0],
+    transition: { duration: 0.5 },
+  },
+};
 
 export default function LandingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -87,10 +114,31 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-cool-50">
-      {/* Hero Section - adjust top padding */}
-      <section className="min-h-screen flex flex-col justify-center items-center pt-20 pb-20 px-12 text-center bg-gradient-to-b from-primary-50/50 via-secondary-50/30 to-cool-50">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex flex-col justify-center items-center pt-20 pb-20 px-12 text-center overflow-hidden">
+        {/* Background with gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/50 via-secondary-50/30 to-cool-50">
+          {/* Bottom fade overlay */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cool-50 to-transparent" />
+        </div>
+
+        {/* Flickering Grid with mask */}
+        <div className="absolute inset-0 z-0">
+          <FlickeringGrid
+            className="absolute inset-0 [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]"
+            squareSize={3}
+            gridGap={5}
+            color="#9333ea"
+            maxOpacity={0.2}
+            flickerChance={0.08}
+            height={1200}
+            width={1200}
+          />
+        </div>
+
+        {/* Content */}
         <motion.div
-          className="max-w-6xl mx-auto"
+          className="relative z-10 max-w-6xl mx-auto"
           initial="initial"
           animate="animate"
           variants={staggerContainer}
@@ -98,37 +146,72 @@ export default function LandingPage() {
           <motion.h1
             className="text-7xl font-bold mb-6 bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 bg-clip-text text-transparent"
             variants={fadeIn}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
             Increase Your Sales with AI Virtual Try-ons
           </motion.h1>
+
           <motion.p
             className="text-xl text-cool-500 mb-12 max-w-2xl mx-auto leading-relaxed"
             variants={fadeIn}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
-            Transform your e-commerce with our cutting-edge AI-powered virtual
-            try-on technology
+            Generate high-quality on-model images from flatlay apparel images
+            within seconds
           </motion.p>
+
           <motion.div className="flex gap-4 justify-center" variants={fadeIn}>
             <Link href="/demo">
-              <ShimmerButton>
+              <motion.div
+                variants={buttonHover}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <ShimmerButton>
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-primary-500 to-secondary-400 hover:opacity-90 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group"
+                  >
+                    Try Demo{" "}
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </ShimmerButton>
+              </motion.div>
+            </Link>
+
+            <Link href="#contact">
+              <motion.div
+                variants={buttonHover}
+                whileHover="hover"
+                whileTap="tap"
+              >
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-primary-500 to-secondary-400 hover:opacity-90 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group"
+                  variant="outline"
+                  className="border-2 border-primary-200 text-primary-600 bg-primary-30 backdrop-blur-sm hover:bg-primary-50 px-8 py-6 text-lg font-semibold transition-all duration-200"
                 >
-                  Try Demo{" "}
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  Contact Sales
                 </Button>
-              </ShimmerButton>
+              </motion.div>
             </Link>
-            <Link href="#contact">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-primary-200 text-primary-600 hover:bg-primary-50 px-8 py-6 text-lg font-semibold transition-all duration-200"
-              >
-                Contact Sales
-              </Button>
-            </Link>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.5 }}
+        >
+          <motion.div
+            className="w-6 h-10 border-2 border-primary-300 rounded-full p-1"
+            animate={{ y: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+          >
+            <div className="w-1.5 h-1.5 bg-primary-400 rounded-full mx-auto" />
           </motion.div>
         </motion.div>
       </section>
@@ -146,27 +229,56 @@ export default function LandingPage() {
               title: "40%",
               subtitle: "Increase in Conversion",
               icon: TrendingUp,
+              gradient: "from-primary-400 to-primary-600",
             },
             {
               title: "30%",
               subtitle: "Reduction in Returns",
               icon: RefreshCcw,
+              gradient: "from-secondary-400 to-secondary-600",
             },
-            { title: "2x", subtitle: "Customer Engagement", icon: Zap },
+            {
+              title: "2x",
+              subtitle: "Customer Engagement",
+              icon: Zap,
+              gradient: "from-accent-400 to-accent-600",
+            },
           ].map((stat, index) => (
             <motion.div
               key={index}
-              className="text-center p-6 rounded-xl bg-cool-50"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              className="text-center p-6 rounded-xl bg-cool-50 cursor-pointer relative group overflow-hidden"
+              initial="initial"
+              whileHover="hover"
+              whileTap="tap"
+              variants={statCardVariants}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
             >
-              <stat.icon className="w-12 h-12 mx-auto mb-4 text-primary-500" />
-              <h3 className="text-4xl font-bold text-primary-600 mb-2">
+              {/* Background gradient overlay */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
+              />
+
+              {/* Icon with animation */}
+              <motion.div variants={iconVariants}>
+                <stat.icon className="w-12 h-12 mx-auto mb-4 text-primary-500 transition-colors duration-300 group-hover:text-primary-600" />
+              </motion.div>
+
+              {/* Content with hover effects */}
+              <motion.h3
+                className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent mb-2"
+                initial={{ y: 0 }}
+                whileHover={{ y: -2 }}
+              >
                 {stat.title}
-              </h3>
-              <p className="text-cool-500">{stat.subtitle}</p>
+              </motion.h3>
+
+              <motion.p
+                className="text-cool-500 group-hover:text-cool-600 transition-colors duration-300"
+                initial={{ y: 0 }}
+                whileHover={{ y: -1 }}
+              >
+                {stat.subtitle}
+              </motion.p>
             </motion.div>
           ))}
         </div>
@@ -213,7 +325,7 @@ export default function LandingPage() {
                 This helps to reduce uncertainty and increase confidence in
                 their buying decisions.
               </p>
-              <Button className="bg-gradient-to-r from-primary-500 to-secondary-400 text-white">
+              <Button className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300">
                 Request Access
               </Button>
             </motion.div>
@@ -235,7 +347,7 @@ export default function LandingPage() {
                 to try on products, brands increase conversion rates from the
                 view page to purchases.
               </p>
-              <Button className="bg-gradient-to-r from-primary-500 to-secondary-400 text-white">
+              <Button className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300">
                 Request Access
               </Button>
             </motion.div>
@@ -278,7 +390,7 @@ export default function LandingPage() {
                 Virtual try-ons can help to reduce the number of returns and
                 save time and costs associated with processing the returns.
               </p>
-              <Button className="bg-gradient-to-r from-primary-500 to-secondary-400 text-white">
+              <Button className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300">
                 Request Access
               </Button>
             </motion.div>
@@ -300,7 +412,7 @@ export default function LandingPage() {
                 differentiate themselves from competitors and stand out in the
                 increasingly crowded market.
               </p>
-              <Button className="bg-gradient-to-r from-primary-500 to-secondary-400 text-white">
+              <Button className="bg-cool-500 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-400 text-white shadow-sm hover:shadow transition-all duration-300">
                 Request Access
               </Button>
             </motion.div>
@@ -378,7 +490,7 @@ export default function LandingPage() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
       >
-        <div className="max-w-xl mx-auto px-12 pt-20">
+        <div className="max-w-2xl mx-auto px-12 pt-20">
           <h2 className="text-3xl font-bold mb-2 text-center bg-gradient-to-r from-primary-500 to-secondary-400 bg-clip-text text-transparent">
             Get Started Today
           </h2>
@@ -421,29 +533,37 @@ export default function LandingPage() {
               required
               className="w-full p-4 border-2 border-cool-200 rounded-xl focus:border-primary-300 focus:ring-2 focus:ring-primary-100 transition-all duration-200 h-32 bg-white"
             />
-            <Button
-              className="w-full bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 hover:opacity-90 text-white p-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl group"
+            <motion.button
+              type="submit"
               disabled={isSubmitting}
+              className="w-full bg-primary-600 text-white px-8 py-2 rounded-xl font-semibold text-lg shadow-lg group"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 10,
+              }}
             >
               {isSubmitting ? (
                 <div className="flex items-center justify-center gap-2">
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Sending...
+                  <span>Sending...</span>
                 </div>
               ) : (
-                <>
-                  Send Message{" "}
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </>
+                <div className="flex items-center justify-center gap-2">
+                  <span>Send Message</span>
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform duration-200" />
+                </div>
               )}
-            </Button>
+            </motion.button>
           </motion.form>
         </div>
       </motion.section>
 
       {/* Footer Section - Add this at the end before closing div */}
       <footer className="bg-white border-t border-cool-200">
-        <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-8"> */}
           {/* Brand Column */}
           {/* <div className="space-y-4">
@@ -524,19 +644,20 @@ export default function LandingPage() {
                   </a>
                 ))}
               </div>
-            </div>
-          </div> */}
+            </div> */}
 
           {/* Bottom Bar */}
           {/* <div className="mt-12 pt-8 border-t border-cool-200"> */}
           <div className="flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-cool-500 text-sm">
-              © {new Date().getFullYear()} Getmytry AI | All rights reserved.
+            <p className="text-cool-500 text-base flex items-center gap-1">
+              © {new Date().getFullYear()}{" "}
+              <GradientText className="text-lg px-1">Getmytry AI</GradientText>{" "}
+              | All rights reserved.
             </p>
             <div className="flex items-center space-x-2 mt-2 sm:mt-0">
-              <span className="text-cool-400 text-xs">Made with</span>
+              <span className="text-cool-400 text-base">Made with</span>
               <span className="text-accent-400">❤</span>
-              <span className="text-cool-400 text-xs">in India</span>
+              <span className="text-cool-400 text-base">in India</span>
             </div>
           </div>
         </div>

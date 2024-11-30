@@ -1,4 +1,6 @@
-'use client';
+"use client";
+
+import Image from "next/image";
 
 interface ImageSelectorProps {
   images: string[];
@@ -10,7 +12,7 @@ interface ImageSelectorProps {
 export default function ImageSelector({
   images,
   onSelect,
-  className = 'grid grid-cols-4 gap-2',
+  className = "grid grid-cols-4 gap-2",
   selectedImage,
 }: ImageSelectorProps) {
   return (
@@ -25,13 +27,15 @@ export default function ImageSelector({
             hover:shadow-md hover:scale-105
             focus:outline-none focus:ring-2 focus:ring-primary-500
             ${
-              selectedImage === image ? 'ring-2 ring-primary-500 shadow-md' : ''
+              selectedImage === image ? "ring-2 ring-primary-500 shadow-md" : ""
             }
           `}
         >
-          <img
+          <Image
             src={image}
             alt={`Sample ${index + 1}`}
+            width={200}
+            height={200}
             className="w-full h-full object-contain"
           />
           {selectedImage === image && (

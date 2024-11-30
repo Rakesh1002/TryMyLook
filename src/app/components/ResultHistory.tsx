@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trash2, Download } from "lucide-react";
+import Image from "next/image";
 
 interface TryOnResult {
   outputUrl: string;
@@ -16,7 +17,6 @@ export default function ResultHistory() {
   const [results, setResults] = useState<TryOnResult[]>([]);
 
   useEffect(() => {
-    // Load results from localStorage
     const loadResults = () => {
       const storedResults = localStorage.getItem("tryOnResults");
       if (storedResults) {
@@ -24,15 +24,9 @@ export default function ResultHistory() {
       }
     };
 
-    // Load initial results
     loadResults();
-
-    // Add event listener for storage changes
     window.addEventListener("storage", loadResults);
-
-    return () => {
-      window.removeEventListener("storage", loadResults);
-    };
+    return () => window.removeEventListener("storage", loadResults);
   }, []);
 
   const handleDelete = (index: number) => {
@@ -58,17 +52,15 @@ export default function ResultHistory() {
     }
   };
 
-  if (results.length === 0) {
-    return null;
-  }
+  if (results.length === 0) return null;
 
   return (
     <div className="mt-12 space-y-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl font-semibold text-gray-900">
           Previous Try-Ons
         </h2>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-cool-500">
           {results.length} {results.length === 1 ? "result" : "results"}
         </span>
       </div>
@@ -84,59 +76,67 @@ export default function ResultHistory() {
               exit={{ opacity: 0, scale: 0.9 }}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-200"
             >
-              <div className="p-4">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex space-x-2">
-                    <div className="relative group">
-                      <img
-                        src={result.apparelPreview}
-                        alt="Apparel"
-                        className="w-16 h-16 object-contain rounded-lg bg-gray-50"
-                      />
-                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 rounded-lg" />
-                    </div>
-                    <div className="relative group">
-                      <img
+              {/* Header with previews and actions */}
+              <div className="p-4 border-b border-cool-100">
+                <div className="flex justify-between items-center">
+                  {/* Preview Images */}
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-16 h-16">
+                      <Image
                         src={result.modelPreview}
                         alt="Model"
-                        className="w-16 h-16 object-contain rounded-lg bg-gray-50"
+                        width={64}
+                        height={64}
+                        className="rounded-lg object-cover bg-cool-50"
                       />
-                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 rounded-lg" />
+                    </div>
+                    <div className="flex-shrink-0 w-16 h-16">
+                      <Image
+                        src={result.apparelPreview}
+                        alt="Apparel"
+                        width={64}
+                        height={64}
+                        className="rounded-lg object-cover bg-cool-50"
+                      />
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => handleDownload(result.outputUrl, index)}
-                      className="p-1.5 text-gray-500 hover:text-primary-500 transition-colors"
-                      title="Download result"
-                    >
-                      <Download className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="p-1.5 text-gray-500 hover:text-red-500 transition-colors"
-                      title="Delete result"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-                <div className="relative group">
-                  <div className="aspect-square w-full rounded-lg overflow-hidden bg-gray-50">
-                    <img
-                      src={result.outputUrl}
-                      alt="Try-on result"
-                      className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-200"
-                    />
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <span className="text-xs text-white">
+
+                  {/* Actions */}
+                  <div className="flex flex-col items-end gap-2">
+                    <span className="text-sm text-cool-500">
                       {formatDistanceToNow(new Date(result.timestamp), {
                         addSuffix: true,
                       })}
                     </span>
+                    <div className="flex gap-1">
+                      <button
+                        onClick={() => handleDownload(result.outputUrl, index)}
+                        className="p-2 text-cool-500 hover:text-primary-500 transition-colors rounded-full hover:bg-cool-50"
+                        title="Download result"
+                      >
+                        <Download className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(index)}
+                        className="p-2 text-cool-500 hover:text-red-500 transition-colors rounded-full hover:bg-cool-50"
+                        title="Delete result"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Result Image */}
+              <div className="relative aspect-[3/4] w-full">
+                <Image
+                  src={result.outputUrl}
+                  alt="Try-on result"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </motion.div>
           ))}

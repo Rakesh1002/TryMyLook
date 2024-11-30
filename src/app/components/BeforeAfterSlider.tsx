@@ -40,13 +40,25 @@ export default function BeforeAfterSlider({
       onTouchMove={handleMove}
     >
       <div className="absolute inset-0">
-        <Image src={afterImage} alt="After" fill className="object-cover" />
+        <Image
+          src={afterImage}
+          alt="After"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover"
+        />
       </div>
       <div
         className="absolute inset-0"
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
-        <Image src={beforeImage} alt="Before" fill className="object-cover" />
+        <Image
+          src={beforeImage}
+          alt="Before"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover"
+        />
       </div>
       <div
         className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"

@@ -1,28 +1,29 @@
-'use client';
+"use client";
 
-import { useState, useRef } from 'react';
-import { Button } from '../../components/ui/button';
-import { Card, CardContent } from '../../components/ui/card';
-import { Input } from '../../components/ui/input';
-import { Label } from '../../components/ui/label';
-import { Slider } from '../../components/ui/slider';
+import { useState, useRef } from "react";
+import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Slider } from "./ui/slider";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../../components/ui/select';
-import { FaPlus } from 'react-icons/fa';
+} from "./ui/select";
+import { FaPlus } from "react-icons/fa";
+import Image from "next/image";
 
 export default function ImageToVideoForm() {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [prompt, setPrompt] = useState('');
-  const [negativePrompt, setNegativePrompt] = useState('');
+  const [prompt, setPrompt] = useState("");
+  const [negativePrompt, setNegativePrompt] = useState("");
   const [cfgScale, setCfgScale] = useState(0.5);
-  const [mode, setMode] = useState<'std' | 'pro'>('std');
-  const [duration, setDuration] = useState<'5' | '10'>('5');
+  const [mode, setMode] = useState<"std" | "pro">("std");
+  const [duration, setDuration] = useState<"5" | "10">("5");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
@@ -44,7 +45,7 @@ export default function ImageToVideoForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!image) {
-      setError('Please select an image.');
+      setError("Please select an image.");
       return;
     }
 
@@ -53,17 +54,17 @@ export default function ImageToVideoForm() {
     setResultUrl(null);
 
     const formData = new FormData();
-    formData.append('requestType', 'img2video');
-    formData.append('image', image);
-    formData.append('prompt', prompt);
-    formData.append('negative_prompt', negativePrompt);
-    formData.append('cfg_scale', cfgScale.toString());
-    formData.append('mode', mode);
-    formData.append('duration', duration);
+    formData.append("requestType", "img2video");
+    formData.append("image", image);
+    formData.append("prompt", prompt);
+    formData.append("negative_prompt", negativePrompt);
+    formData.append("cfg_scale", cfgScale.toString());
+    formData.append("mode", mode);
+    formData.append("duration", duration);
 
     try {
-      const response = await fetch('/api/try-on', {
-        method: 'POST',
+      const response = await fetch("/api/try-on", {
+        method: "POST",
         body: formData,
       });
 
@@ -72,15 +73,15 @@ export default function ImageToVideoForm() {
       }
 
       const data = await response.json();
-      console.log('API Response:', JSON.stringify(data, null, 2));
+      console.log("API Response:", JSON.stringify(data, null, 2));
 
       if (data.result) {
         setResultUrl(data.result);
       } else {
-        throw new Error('No result URL found in the response');
+        throw new Error("No result URL found in the response");
       }
     } catch (err) {
-      console.error('Error details:', err);
+      console.error("Error details:", err);
       setError(
         `An error occurred while processing the image: ${
           err instanceof Error ? err.message : String(err)
@@ -104,9 +105,11 @@ export default function ImageToVideoForm() {
               onClick={() => imageInputRef.current?.click()}
             >
               {imagePreview ? (
-                <img
+                <Image
                   src={imagePreview}
                   alt="Image preview"
+                  width={400}
+                  height={400}
                   className="max-w-full max-h-full object-contain"
                 />
               ) : (
@@ -173,7 +176,7 @@ export default function ImageToVideoForm() {
           </Label>
           <Select
             value={mode}
-            onValueChange={(value: 'std' | 'pro') => setMode(value)}
+            onValueChange={(value: "std" | "pro") => setMode(value)}
           >
             <SelectTrigger className="w-full mt-1">
               <SelectValue placeholder="Select mode" />
@@ -191,7 +194,7 @@ export default function ImageToVideoForm() {
           </Label>
           <Select
             value={duration}
-            onValueChange={(value: '5' | '10') => setDuration(value)}
+            onValueChange={(value: "5" | "10") => setDuration(value)}
           >
             <SelectTrigger className="w-full mt-1">
               <SelectValue placeholder="Select duration" />
@@ -211,7 +214,7 @@ export default function ImageToVideoForm() {
           className="w-full md:w-auto px-8 py-3 text-lg font-semibold transition-colors duration-200 ease-in-out
                      bg-blue-500 hover:bg-blue-600 text-white hover:text-yellow-200"
         >
-          {isLoading ? 'Processing...' : 'Generate Video'}
+          {isLoading ? "Processing..." : "Generate Video"}
         </Button>
       </div>
 

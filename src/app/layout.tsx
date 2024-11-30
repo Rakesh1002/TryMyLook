@@ -1,9 +1,45 @@
 import "./global.css";
-import { Toaster } from "sonner";
+import { Metadata, Viewport } from "next";
+import { Crimson_Pro } from "next/font/google";
+import ClientProvider from "./components/ClientProvider";
 
-export const metadata = {
-  title: "Getmytry AI",
-  description: "Increase your sales with AI Virtual Try-On",
+const crimson = Crimson_Pro({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-crimson",
+  weight: ["200", "300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+export const metadata: Metadata = {
+  title: {
+    default: "Getmytry AI - Virtual Try-On Platform",
+    template: "%s | Getmytry AI",
+  },
+  description:
+    "Transform your e-commerce with AI-powered virtual try-on technology. Increase sales, reduce returns, and enhance customer experience.",
+  keywords: [
+    "virtual try-on",
+    "AI fashion",
+    "e-commerce",
+    "fashion tech",
+    "retail technology",
+    "digital fitting room",
+  ],
+  authors: [{ name: "Getmytry AI" }],
+  creator: "Getmytry AI",
+  publisher: "Getmytry AI",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -11,18 +47,41 @@ export const metadata = {
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
     ],
     apple: [{ url: "/apple-touch-icon.png" }],
-    other: [
-      {
-        url: "/android-chrome-192x192.png",
-        sizes: "192x192",
-        type: "image/png",
-      },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://getmytry.ai",
+    siteName: "Getmytry AI",
+    title: "Getmytry AI - Virtual Try-On Platform",
+    description:
+      "Transform your e-commerce with AI-powered virtual try-on technology",
+    images: [
       {
         url: "/android-chrome-512x512.png",
-        sizes: "512x512",
-        type: "image/png",
+        width: 512,
+        height: 512,
+        alt: "Getmytry AI Logo",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Getmytry AI - Virtual Try-On Platform",
+    description:
+      "Transform your e-commerce with AI-powered virtual try-on technology",
+    images: ["/android-chrome-512x512.png"],
   },
 };
 
@@ -32,10 +91,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <div className="antialiased">{children}</div>
-        <Toaster position="top-right" />
+    <html lang="en" className={crimson.variable} suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <div className={`antialiased font-crimson`}>
+          <ClientProvider>{children}</ClientProvider>
+        </div>
       </body>
     </html>
   );

@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { FaDownload } from "react-icons/fa";
-import { Card, CardContent } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
+import { Card, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
+import Image from "next/image";
 
 interface ResultDisplayProps {
   outputUrl: string | null;
@@ -50,9 +51,11 @@ export default function ResultDisplay({ outputUrl }: ResultDisplayProps) {
               Loading...
             </div>
           )}
-          <img
+          <Image
             src={outputUrl}
             alt="Virtual Try-On Result"
+            width={800}
+            height={1200}
             className={`rounded-lg shadow-md w-full ${
               imageLoaded ? "" : "hidden"
             }`}
