@@ -26,7 +26,7 @@ export async function checkRateLimit(ip: string): Promise<{
 
   const isLimited = count > LIMIT;
   const message = isLimited
-    ? "Trial limit reached. Please mail contact@getmytry.com to purchase a license or know more about our plans."
+    ? "Trial limit reached. Please mail contact@trymylook.com to purchase a license or know more about our plans."
     : `${LIMIT - count} trials remaining`;
 
   return {

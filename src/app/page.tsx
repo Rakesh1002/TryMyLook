@@ -6,7 +6,7 @@ export default function Home() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "Getmytry AI",
+    name: "TryMyLook AI",
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
     offers: {

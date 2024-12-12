@@ -157,7 +157,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
             action: {
               label: "Contact Sales",
               onClick: () =>
-                (window.location.href = "mailto:contact@getmytry.com"),
+                (window.location.href = "mailto:contact@trymylook.com"),
             },
           });
         } else {

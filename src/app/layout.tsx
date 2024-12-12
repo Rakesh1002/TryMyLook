@@ -19,8 +19,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Getmytry AI - Virtual Try-On Platform",
-    template: "%s | Getmytry AI",
+    default: "TryMyLook AI - Virtual Try-On Platform",
+    template: "%s | TryMyLook AI",
   },
   description:
     "Transform your e-commerce with AI-powered virtual try-on technology. Increase sales, reduce returns, and enhance customer experience.",
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
     "retail technology",
     "digital fitting room",
   ],
-  authors: [{ name: "Getmytry AI" }],
-  creator: "Getmytry AI",
-  publisher: "Getmytry AI",
+  authors: [{ name: "TryMyLook AI" }],
+  creator: "TryMyLook AI",
+  publisher: "TryMyLook AI",
   formatDetection: {
     email: false,
     address: false,
@@ -62,9 +62,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://getmytry.ai",
-    siteName: "Getmytry AI",
-    title: "Getmytry AI - Virtual Try-On Platform",
+    url: "https://TryMyLook.ai",
+    siteName: "TryMyLook AI",
+    title: "TryMyLook AI - Virtual Try-On Platform",
     description:
       "Transform your e-commerce with AI-powered virtual try-on technology",
     images: [
@@ -72,13 +72,13 @@ export const metadata: Metadata = {
         url: "/android-chrome-512x512.png",
         width: 512,
         height: 512,
-        alt: "Getmytry AI Logo",
+        alt: "TryMyLook AI Logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Getmytry AI - Virtual Try-On Platform",
+    title: "TryMyLook AI - Virtual Try-On Platform",
     description:
       "Transform your e-commerce with AI-powered virtual try-on technology",
     images: ["/android-chrome-512x512.png"],

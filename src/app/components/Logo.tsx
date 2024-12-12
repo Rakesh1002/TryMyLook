@@ -19,7 +19,7 @@ export const Logo: React.FC<{ className?: string }> = ({ className = "" }) => {
             marginRight: "-0.5em",
           }}
         >
-          Getmytry AI
+          TryMyLook AI
         </span>
       </div>
     </div>

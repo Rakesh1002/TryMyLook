@@ -589,7 +589,7 @@ export default function LandingPage() {
                   <Shirt className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-lg font-semibold bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
-                  GetMyTry
+                  TryMyLook
                 </span>
               </div>
               <p className="text-cool-500 text-sm">
@@ -668,7 +668,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <p className="text-cool-500 text-base flex items-center gap-1">
               © {new Date().getFullYear()}{" "}
-              <GradientText className="text-lg px-1">Getmytry AI</GradientText>{" "}
+              <GradientText className="text-lg px-1">TryMyLook AI</GradientText>{" "}
               | All rights reserved.
             </p>
             <div className="flex items-center space-x-2 mt-2 sm:mt-0">

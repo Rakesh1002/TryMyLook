@@ -1,4 +1,4 @@
-# Getmytry AI - Virtual Try-On Platform
+# trymylook AI - Virtual Try-On Platform
 
 An AI-powered virtual try-on solution that helps e-commerce businesses increase sales and reduce returns through immersive shopping experiences.
 
@@ -37,7 +37,7 @@ An AI-powered virtual try-on solution that helps e-commerce businesses increase 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/getmytry-ai.git
+git clone https://github.com/yourusername/trymylook-ai.git
 ```
 
 2. Install dependencies:
@@ -92,4 +92,4 @@ This project is proprietary software. All rights reserved.
 
 ## Contact
 
-For enterprise solutions and inquiries, please contact our sales team through the [contact form](https://getmytry.ai/#contact) on our website.
+For enterprise solutions and inquiries, please contact our sales team through the [contact form](https://trymylook.ai/#contact) on our website.

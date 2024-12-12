@@ -111,7 +111,7 @@ export async function POST(req: Request) {
                   <p style="background: #f9f9f9; padding: 15px; border-radius: 5px;">${message}</p>
                 </div>
                 <div style="color: #666; font-size: 12px; margin-top: 20px; padding-top: 10px; border-top: 1px solid #eee;">
-                  Sent from getmytry.com
+                  Sent from TryMyLook.com
                 </div>
               </div>
             `,
@@ -163,7 +163,7 @@ export async function POST(req: Request) {
           .api(`/users/${process.env.SENDER_EMAIL}/sendMail`)
           .post({
             message: {
-              subject: "Thank you for contacting Getmytry AI",
+              subject: "Thank you for contacting TryMyLook AI",
               importance: "normal",
               body: {
                 contentType: "HTML",
@@ -174,12 +174,12 @@ export async function POST(req: Request) {
                   </h2>
                   <div style="margin: 20px 0;">
                     <p>Dear ${companyName},</p>
-                    <p>Thank you for reaching out to Getmytry AI. We have received your message and will get back to you as soon as possible.</p>
+                    <p>Thank you for reaching out to TryMyLook AI. We have received your message and will get back to you as soon as possible.</p>
                     <p>Here's a copy of your message:</p>
                     <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin: 15px 0;">
                       ${message}
                     </div>
-                    <p>Best regards,<br>The Getmytry AI Team</p>
+                    <p>Best regards,<br>The TryMyLook AI Team</p>
                   </div>
                   <div style="color: #666; font-size: 12px; margin-top: 20px; padding-top: 10px; border-top: 1px solid #eee;">
                     This is an automated response. Please do not reply to this email.
