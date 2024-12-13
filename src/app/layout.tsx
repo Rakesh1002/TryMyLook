@@ -23,7 +23,7 @@ export const viewport: Viewport = {
   ],
 };
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://trymylook.ai";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://trymylook.xyz";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),

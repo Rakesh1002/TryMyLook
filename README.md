@@ -92,4 +92,4 @@ This project is proprietary software. All rights reserved.
 
 ## Contact
 
-For enterprise solutions and inquiries, please contact our sales team through the [contact form](https://trymylook.ai/#contact) on our website.
+For enterprise solutions and inquiries, please contact our sales team through the [contact form](https://trymylook.xyz/#contact) on our website.
