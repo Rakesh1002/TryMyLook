@@ -63,15 +63,5 @@ export async function checkAndUpdateRateLimit(): Promise<boolean> {
     );
   }
 
-  // Increment the usage counter
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
-      demoUsed: {
-        increment: 1,
-      },
-    },
-  });
-
   return true;
 }

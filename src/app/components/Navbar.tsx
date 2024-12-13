@@ -15,7 +15,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
   const pathname = usePathname();
-  const remainingDemos = useRemainingDemos();
+  const { remainingDemos } = useRemainingDemos();
 
   const isOnDemoPage = pathname === "/demo";
 

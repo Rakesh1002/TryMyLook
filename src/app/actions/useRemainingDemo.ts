@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 export function useRemainingDemos() {
   const { data: session } = useSession();
   const [remainingDemos, setRemainingDemos] = useState<number | null>(null);
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
 
   useEffect(() => {
     async function fetchRemainingDemos() {
@@ -19,7 +20,9 @@ export function useRemainingDemos() {
     }
 
     fetchRemainingDemos();
-  }, [session?.user?.email]);
+  }, [session?.user?.email, refetchTrigger]);
 
-  return remainingDemos;
+  const refetch = () => setRefetchTrigger((prev) => prev + 1);
+
+  return { remainingDemos, refetch };
 }

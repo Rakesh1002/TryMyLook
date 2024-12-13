@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { useRemainingDemos } from "../actions/useRemainingDemo";
 
 const modelImages = {
   male: [
@@ -73,6 +74,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
     useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { refetch } = useRemainingDemos();
 
   const handleModelSelect = async (imagePath: string) => {
     try {
@@ -196,6 +198,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
         localStorage.setItem("tryOnResults", JSON.stringify(updatedResults));
 
         onResult(result.result);
+        refetch();
       }
 
       // Show remaining trials after successful generation
