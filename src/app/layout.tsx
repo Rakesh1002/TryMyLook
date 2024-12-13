@@ -2,6 +2,8 @@ import "./global.css";
 import { Metadata, Viewport } from "next";
 import { Crimson_Pro } from "next/font/google";
 import ClientProvider from "./components/ClientProvider";
+import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react";
 
 const crimson = Crimson_Pro({
   subsets: ["latin"],
@@ -85,16 +87,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+
   return (
     <html lang="en" className={crimson.variable} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <div className={`antialiased font-crimson`}>
-          <ClientProvider>{children}</ClientProvider>
+          <SessionProvider session={session}>
+            <ClientProvider>{children}</ClientProvider>
+          </SessionProvider>
         </div>
       </body>
     </html>

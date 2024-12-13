@@ -70,12 +70,12 @@ const iconVariants = {
 };
 
 export default function LandingPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     companyName: "",
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,23 +90,39 @@ export default function LandingPage() {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit form");
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(
+          `Message sent successfully! We'll get back to you at ${formData.email} soon.`,
+          {
+            duration: 5000,
+          }
+        );
+
+        // Reset form
+        setFormData({
+          companyName: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        toast.error(
+          `Failed to send message. ${
+            data.error || "Please try again or contact us directly."
+          }`,
+          {
+            duration: 5000,
+          }
+        );
       }
-
-      // Clear form
-      setFormData({
-        companyName: "",
-        email: "",
-        message: "",
-      });
-
-      toast.success(
-        "Thank you for your message! We will get back to you soon."
-      );
     } catch (error) {
-      console.error("Contact form error:", error);
-      toast.error("Failed to submit form. Please try again.");
+      toast.error(
+        "Something went wrong. Please try again later or email us at contact@trymylook.com",
+        {
+          duration: 5000,
+        }
+      );
     } finally {
       setIsSubmitting(false);
     }

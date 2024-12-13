@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { virtualTryOn, imageToVideo } from "../../utils/KlingApi";
+import { auth } from "@/auth";
+import { createDemo } from "@/app/actions/demo";
 
 export const maxDuration = 60;
 
@@ -8,7 +10,30 @@ export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const requestType = formData.get("requestType") as string;
 
+  // Check authentication and rate limit for try-on requests
   if (requestType === "tryon") {
+    const session = await auth();
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    // Check rate limit and create demo record
+    const demoResult = await createDemo("try-on");
+    if (!demoResult.success) {
+      return NextResponse.json(
+        {
+          error: demoResult.error,
+          contactSales: demoResult.isRateLimit,
+        },
+        {
+          status: demoResult.isRateLimit ? 429 : 500,
+          headers: {
+            "X-RateLimit-Remaining": String(demoResult.remainingTries || 0),
+          },
+        }
+      );
+    }
+
     const modelImage = formData.get("modelImage") as Blob;
     const apparelImage = formData.get("apparelImage") as Blob;
 
@@ -26,7 +51,16 @@ export async function POST(request: NextRequest) {
       console.log("Calling virtualTryOn function");
       const result = await virtualTryOn(modelImage, apparelImage);
       console.log("Virtual try-on result:", result);
-      return NextResponse.json({ result });
+
+      // Return result with remaining tries
+      return NextResponse.json(
+        { result },
+        {
+          headers: {
+            "X-RateLimit-Remaining": String(demoResult.remainingTries),
+          },
+        }
+      );
     } catch (error) {
       console.error("Virtual try-on failed:", error);
       if (error instanceof Error) {

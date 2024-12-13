@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Toaster } from "sonner";
 
 export default function ClientProvider({
   children,
@@ -24,5 +25,10 @@ export default function ClientProvider({
     return null;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <Toaster position="top-center" richColors closeButton />
+      {children}
+    </>
+  );
 }
