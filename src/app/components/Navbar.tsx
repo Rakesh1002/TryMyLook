@@ -7,11 +7,17 @@ import { useState, useEffect } from "react";
 import Logo from "./Logo";
 import { useSession, signOut } from "next-auth/react";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useRemainingDemos } from "../actions/useRemainingDemo";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
+  const pathname = usePathname();
+  const remainingDemos = useRemainingDemos();
+
+  const isOnDemoPage = pathname === "/demo";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,22 +81,29 @@ export default function Navbar() {
                       height={32}
                     />
                   )}
-                  <span className="font-medium">{session.user.name}</span>
+                  <div className="flex flex-col">
+                    <span className="font-medium">{session.user.name}</span>
+                    <span className="text-sm text-cool-500">
+                      {remainingDemos} demos remaining
+                    </span>
+                  </div>
                 </div>
                 <button
                   onClick={handleSignOut}
-                  className="text-cool-600 hover:text-white hover:bg-gradient-to-r hover:from-rose-500 hover:to-pink-500 rounded-lg px-4 py-2 font-medium transition-all duration-200"
+                  className="text-cool-600 hover:text-white hover:bg-gradient-to-r hover:from-rose-500 hover:to-pink-500 rounded-lg px-4 py-2 font-medium transition-all duration-200 border border-cool-300"
                 >
                   Sign Out
                 </button>
               </>
             )}
-            <Link
-              href="/demo"
-              className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-2.5 rounded-lg font-medium hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-sm hover:shadow-md"
-            >
-              Try Demo
-            </Link>
+            {!isOnDemoPage && (
+              <Link
+                href="/demo"
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-2.5 rounded-lg font-medium hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-sm hover:shadow-md"
+              >
+                Try Demo
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -141,13 +154,15 @@ export default function Navbar() {
                     </button>
                   </>
                 )}
-                <Link
-                  href="/demo"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block w-full text-center bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-lg font-medium hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-sm hover:shadow-md"
-                >
-                  Try Demo
-                </Link>
+                {!isOnDemoPage && (
+                  <Link
+                    href="/demo"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-center bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-lg font-medium hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 shadow-sm hover:shadow-md"
+                  >
+                    Try Demo
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}

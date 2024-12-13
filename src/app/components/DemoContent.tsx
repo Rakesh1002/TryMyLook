@@ -1,13 +1,27 @@
 "use client";
 
-import TryOnForm from "./TryOnForm";
-import ResultDisplay from "./ResultDisplay";
-import ResultHistory from "./ResultHistory";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Navbar from "./Navbar";
+
+// Dynamically import heavy components
+const TryOnForm = dynamic(() => import("./TryOnForm"), {
+  loading: () => <div className="animate-pulse bg-cool-100 rounded-2xl h-96" />,
+  ssr: false,
+});
+
+const ResultDisplay = dynamic(() => import("./ResultDisplay"), {
+  loading: () => <div className="animate-pulse bg-cool-100 rounded-2xl h-96" />,
+  ssr: false,
+});
+
+const ResultHistory = dynamic(() => import("./ResultHistory"), {
+  loading: () => <div className="animate-pulse bg-cool-100 rounded-2xl h-48" />,
+  ssr: false,
+});
 
 export default function DemoContent() {
   const [result, setResult] = useState<string | null>(null);

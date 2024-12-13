@@ -7,7 +7,16 @@ export async function upsertUser(userData: {
   name?: string | null;
   image?: string | null;
 }) {
-  return prisma.user.upsert({
+  // Cache key based on email
+  const cacheKey = `user:${userData.email}`;
+
+  // Try to get from cache first
+  const cached = globalThis.__userCache?.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const user = await prisma.user.upsert({
     where: { email: userData.email },
     update: {
       name: userData.name,
@@ -23,4 +32,17 @@ export async function upsertUser(userData: {
       lastDemoReset: new Date(),
     },
   });
+
+  // Initialize cache if needed
+  if (!globalThis.__userCache) {
+    globalThis.__userCache = new Map();
+  }
+
+  // Cache for 5 minutes
+  globalThis.__userCache.set(cacheKey, user);
+  setTimeout(() => {
+    globalThis.__userCache?.delete(cacheKey);
+  }, 5 * 60 * 1000);
+
+  return user;
 }

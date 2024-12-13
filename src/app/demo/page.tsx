@@ -1,14 +1,16 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import DemoContent from "../components/DemoContent";
+import DemoWrapper from "../components/DemoWrapper";
+
+export const runtime = "edge";
+export const preferredRegion = "sin1";
 
 export default async function DemoPage() {
   const session = await auth();
 
-  // Protect the route - redirect to sign in if not authenticated
   if (!session?.user) {
     redirect("/signin");
   }
 
-  return <DemoContent />;
+  return <DemoWrapper />;
 }
