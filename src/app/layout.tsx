@@ -61,7 +61,8 @@ export const metadata: Metadata = {
   },
   category: "Technology",
   verification: {
-    google: "your-google-site-verification", // Add your verification code
+    google:
+      "google-site-verification=W4vWSJ_ktftXRQUiz2FECqLKWBVR4HM9ljZPXaMoi6o", // Add your verification code
   },
   manifest: "/manifest.json",
   appleWebApp: {
