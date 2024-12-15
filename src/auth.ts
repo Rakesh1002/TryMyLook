@@ -4,6 +4,10 @@ import { upsertUser } from "./lib/auth-utils";
 
 export const runtime = "edge";
 
+if (!process.env.AUTH_SECRET) {
+  throw new Error("AUTH_SECRET is not defined");
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google({
@@ -11,6 +15,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/signin",
   },

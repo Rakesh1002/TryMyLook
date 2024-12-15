@@ -1,43 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trash2, Download } from "lucide-react";
 import Image from "next/image";
-
-interface TryOnResult {
-  outputUrl: string;
-  modelPreview: string;
-  apparelPreview: string;
-  timestamp: string;
-}
+import { useDemoStore } from "@/store/demoStore";
+import { toast } from "sonner";
 
 export default function ResultHistory() {
-  const [results, setResults] = useState<TryOnResult[]>([]);
-
-  useEffect(() => {
-    const loadResults = () => {
-      const storedResults = localStorage.getItem("tryOnResults");
-      if (storedResults) {
-        setResults(JSON.parse(storedResults));
-      }
-    };
-
-    loadResults();
-    window.addEventListener("storage", loadResults);
-    return () => window.removeEventListener("storage", loadResults);
-  }, []);
+  const { tryOnResults, addTryOnResult } = useDemoStore();
 
   const handleDelete = (index: number) => {
-    const newResults = results.filter((_, i) => i !== index);
-    localStorage.setItem("tryOnResults", JSON.stringify(newResults));
-    setResults(newResults);
+    const newResults = tryOnResults.filter((_, i) => i !== index);
+    addTryOnResult({ ...newResults[0], timestamp: new Date().toISOString() }); // Trigger state update
   };
 
   const handleDownload = async (url: string, index: number) => {
     try {
       const response = await fetch(url);
+      if (!response.ok) throw new Error("Failed to download image");
+
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -47,12 +29,15 @@ export default function ResultHistory() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(blobUrl);
+
+      toast.success("Image downloaded successfully");
     } catch (error) {
       console.error("Error downloading image:", error);
+      toast.error("Failed to download image");
     }
   };
 
-  if (results.length === 0) return null;
+  if (tryOnResults.length === 0) return null;
 
   return (
     <div className="mt-12 space-y-6">
@@ -61,13 +46,14 @@ export default function ResultHistory() {
           Previous Try-Ons
         </h2>
         <span className="text-sm text-cool-500">
-          {results.length} {results.length === 1 ? "result" : "results"}
+          {tryOnResults.length}{" "}
+          {tryOnResults.length === 1 ? "result" : "results"}
         </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence>
-          {results.map((result, index) => (
+          {tryOnResults.map((result, index) => (
             <motion.div
               key={index}
               layout
@@ -103,7 +89,7 @@ export default function ResultHistory() {
 
                   {/* Actions */}
                   <div className="flex flex-col items-end gap-2">
-                    <span className="text-sm text-cool-500">
+                    <span className="text-sm text-cool-500 pl-4">
                       {formatDistanceToNow(new Date(result.timestamp), {
                         addSuffix: true,
                       })}

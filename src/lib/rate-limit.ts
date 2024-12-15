@@ -1,5 +1,6 @@
 import { prisma } from "./prisma";
 import { auth } from "@/auth";
+import { config } from "./config";
 
 export class RateLimitError extends Error {
   constructor(message: string) {
@@ -35,13 +36,13 @@ export async function checkAndUpdateRateLimit(): Promise<boolean> {
     throw new Error("User not found");
   }
 
-  // Check if we need to reset the counter (e.g., if it's been 24 hours)
+  // Check if we need to reset the counter (e.g., if it's been 30 days)
   const now = new Date();
   const resetTime = new Date(user.lastDemoReset);
-  const hoursSinceReset =
-    (now.getTime() - resetTime.getTime()) / (1000 * 60 * 60);
+  const daysSinceReset =
+    (now.getTime() - resetTime.getTime()) / (1000 * 60 * 60 * 24);
 
-  if (hoursSinceReset >= 24) {
+  if (daysSinceReset >= config.demoResetDays) {
     // Reset the counter
     await prisma.user.update({
       where: { id: user.id },
@@ -55,11 +56,11 @@ export async function checkAndUpdateRateLimit(): Promise<boolean> {
 
   // Check if user has reached their limit
   if (user.demoUsed >= user.demoLimit) {
-    const hoursUntilReset = 24 - hoursSinceReset;
+    const daysUntilReset = config.demoResetDays - daysSinceReset;
     throw new RateLimitError(
       `Demo limit reached. Please try again in ${Math.ceil(
-        hoursUntilReset
-      )} hours.`
+        daysUntilReset
+      )} days.`
     );
   }
 

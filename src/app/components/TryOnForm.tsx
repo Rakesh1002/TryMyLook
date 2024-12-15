@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
-import { useRemainingDemos } from "../actions/useRemainingDemo";
+import { useDemoStore } from "@/store/demoStore";
 
 const modelImages = {
   male: [
@@ -74,7 +74,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
     useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { refetch } = useRemainingDemos();
+  const { fetchRemainingDemos, addTryOnResult } = useDemoStore();
 
   const handleModelSelect = async (imagePath: string) => {
     try {
@@ -175,7 +175,6 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
       const result = await response.json();
 
       if (result.result) {
-        // Store the result in local storage with timestamp
         const tryOnResult = {
           outputUrl: result.result,
           modelPreview: selectedModelPreview,
@@ -183,28 +182,17 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
           timestamp: new Date().toISOString(),
         };
 
-        // Get existing results or initialize empty array
-        const existingResults = JSON.parse(
-          localStorage.getItem("tryOnResults") || "[]"
-        );
-
-        // Add new result at the beginning
-        existingResults.unshift(tryOnResult);
-
-        // Keep only the last 10 results
-        const updatedResults = existingResults.slice(0, 10);
-
-        // Save back to local storage
-        localStorage.setItem("tryOnResults", JSON.stringify(updatedResults));
+        addTryOnResult(tryOnResult);
 
         onResult(result.result);
-        refetch();
+        await fetchRemainingDemos();
       }
 
       // Show remaining trials after successful generation
       const remaining = response.headers.get("X-RateLimit-Remaining");
       if (remaining) {
         toast.success(`${remaining} trial generations remaining`);
+        await fetchRemainingDemos();
       }
     } catch (error) {
       console.error("Error:", error);

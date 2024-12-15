@@ -18,9 +18,15 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json({
-      remaining: Math.max(0, user.demoLimit - user.demoUsed),
+    const remaining = Math.max(0, user.demoLimit - user.demoUsed);
+    console.log("Demo count for user:", {
+      email: session.user.email,
+      limit: user.demoLimit,
+      used: user.demoUsed,
+      remaining,
     });
+
+    return NextResponse.json({ remaining });
   } catch (error) {
     console.error("Failed to get demo count:", error);
     return NextResponse.json(

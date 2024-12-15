@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "./prisma";
+import { config } from "./config";
 
 export async function upsertUser(userData: {
   email: string;
@@ -21,13 +22,14 @@ export async function upsertUser(userData: {
     update: {
       name: userData.name,
       image: userData.image,
+      demoLimit: config.demoLimit,
       lastDemoReset: new Date(),
     },
     create: {
       email: userData.email,
       name: userData.name,
       image: userData.image,
-      demoLimit: 5,
+      demoLimit: config.demoLimit,
       demoUsed: 0,
       lastDemoReset: new Date(),
     },

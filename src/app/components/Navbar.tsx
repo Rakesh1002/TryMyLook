@@ -8,14 +8,14 @@ import Logo from "./Logo";
 import { useSession, signOut } from "next-auth/react";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useRemainingDemos } from "../actions/useRemainingDemo";
+import { useDemoStore } from "@/store/demoStore";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
   const pathname = usePathname();
-  const { remainingDemos } = useRemainingDemos();
+  const { remainingDemos, fetchRemainingDemos } = useDemoStore();
 
   const isOnDemoPage = pathname === "/demo";
 
@@ -40,6 +40,12 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMenuOpen]);
+
+  // Force refetch when component mounts, pathname changes, or refetch function changes
+  useEffect(() => {
+    console.log("Navbar: Fetching demo count..."); // Debug log
+    fetchRemainingDemos();
+  }, [pathname]); // Add refetch to dependencies
 
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/" });

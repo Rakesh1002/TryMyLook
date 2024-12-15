@@ -10,46 +10,7 @@ import { toast } from "sonner";
 import FlickeringGrid from "../components/ui/FlickeringGrid";
 import { GradientText } from "../components/ui/GradientText";
 
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const buttonHover = {
-  hover: { scale: 1.05, transition: { duration: 0.2 } },
-  tap: { scale: 0.95 },
-};
-
-// Add this shimmer animation component
-function ShimmerButton({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative">
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-        animate={{
-          x: ["-100%", "100%"],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 1.5,
-          ease: "linear",
-        }}
-      />
-      {children}
-    </div>
-  );
-}
-
-// Add new animation variants
+// Add new animation variants for the remaining motion components
 const statCardVariants = {
   initial: { scale: 1 },
   hover: {
@@ -130,8 +91,8 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-cool-50">
-      {/* Hero Section */}
-      <section className="relative min-h-[calc(100vh-10rem)] md:min-h-screen flex flex-col justify-center items-center pt-20 sm:pt-30 pb-20 px-12 text-center overflow-hidden">
+      {/* Hero Section - Updated for better mobile responsiveness */}
+      <section className="relative min-h-[100vh] flex flex-col justify-center items-center px-4 sm:px-12 text-center overflow-hidden">
         {/* Background with gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary-50/50 via-secondary-50/30 to-cool-50">
           {/* Bottom fade overlay */}
@@ -152,89 +113,46 @@ export default function LandingPage() {
           />
         </div>
 
-        {/* Content */}
-        <motion.div
-          className="relative z-10 max-w-6xl mx-auto"
-          initial="initial"
-          animate="animate"
-          variants={staggerContainer}
-        >
-          <motion.h1
-            className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 bg-clip-text text-transparent"
-            variants={fadeIn}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+        {/* Content - Simplified animations and improved mobile spacing */}
+        <div className="relative z-10 max-w-6xl mx-auto pt-20 sm:pt-0">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 bg-clip-text text-transparent px-4">
             Increase Your Sales with AI Virtual Try-ons
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className="text-lg sm:text-xl md:text-2xl text-cool-500 mb-10 sm:mb-16 max-w-2xl mx-auto leading-relaxed"
-            variants={fadeIn}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <p className="text-lg sm:text-xl md:text-2xl text-cool-500 mb-10 sm:mb-16 max-w-2xl mx-auto leading-relaxed px-4">
             Generate high-quality on-model images from flatlay apparel images
             within seconds
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-            variants={fadeIn}
-          >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
             <Link href="/demo" className="w-full sm:w-auto">
-              <motion.div
-                variants={buttonHover}
-                whileHover="hover"
-                whileTap="tap"
-                className="w-full sm:w-auto"
+              <Button
+                size="lg"
+                className="w-full sm:w-auto bg-gradient-to-r from-primary-500 to-secondary-400 hover:opacity-90 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group"
               >
-                <ShimmerButton>
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-primary-500 to-secondary-400 hover:opacity-90 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group"
-                  >
-                    Try Demo{" "}
-                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </ShimmerButton>
-              </motion.div>
+                Try Demo{" "}
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </Link>
 
             <Link href="#contact" className="w-full sm:w-auto">
-              <motion.div
-                variants={buttonHover}
-                whileHover="hover"
-                whileTap="tap"
-                className="w-full sm:w-auto"
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto border-2 border-primary-200 text-primary-600 bg-primary-30 backdrop-blur-sm hover:bg-primary-50 px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold transition-all duration-200"
               >
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto border-2 border-primary-200 text-primary-600 bg-primary-30 backdrop-blur-sm hover:bg-primary-50 px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold transition-all duration-200"
-                >
-                  Contact Sales
-                </Button>
-              </motion.div>
+                Contact Sales
+              </Button>
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.5 }}
-        >
-          <motion.div
-            className="w-6 h-10 border-2 border-primary-300 rounded-full p-1"
-            animate={{ y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-          >
-            <div className="w-1.5 h-1.5 bg-primary-400 rounded-full mx-auto" />
-          </motion.div>
-        </motion.div>
+        {/* Scroll indicator - Hidden on mobile */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block">
+          <div className="w-6 h-10 border-2 border-primary-300 rounded-full p-1">
+            <div className="w-1.5 h-1.5 bg-primary-400 rounded-full mx-auto animate-bounce" />
+          </div>
+        </div>
       </section>
 
       {/* Stats Section */}
