@@ -4,6 +4,8 @@ import { Crimson_Pro } from "next/font/google";
 import ClientProvider from "./components/ClientProvider";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
+import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const crimson = Crimson_Pro({
   subsets: ["latin"],
@@ -28,25 +30,43 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://trymylook.xyz";
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "TryMyLook AI - AI-Powered Virtual Try-On Platform",
-    template: "%s | TryMyLook AI",
+    default: "TryMyLook AI - Virtual Try-On & AI Fashion Catalog Generator",
+    template: "%s | TryMyLook AI Virtual Try-On",
   },
   description:
-    "Transform your e-commerce with AI-powered virtual try-on technology. Increase sales by 40%, reduce returns by 30%, and double customer engagement.",
+    "Convert flatlay images to on-model photos instantly. AI-powered virtual try-on platform for fashion brands. Create professional fashion catalogs, transform product photography, and generate on-model photoshoots without models.",
   applicationName: "TryMyLook AI",
   keywords: [
     "virtual try-on",
     "AI fashion",
-    "e-commerce",
-    "fashion tech",
-    "retail technology",
-    "digital fitting room",
+    "flatlay to on-model",
+    "fashion catalog generator",
+    "virtual model photography",
+    "AI product photography",
+    "digital fashion catalog",
+    "on-model photoshoot generator",
+    "e-commerce product visualization",
+    "AI clothing visualization",
+    "virtual fashion photography",
+    "automated product photography",
+    "fashion tech solution",
     "virtual fitting room",
-    "AI try-on",
-    "fashion AI",
-    "e-commerce innovation",
-    "retail solutions",
-    "fashion technology",
+    "AI model generator",
+    "fashion catalog automation",
+    "digital product presentation",
+    "e-commerce optimization",
+    "virtual photoshoot platform",
+    "AI fashion technology",
+    "reduce product photography costs",
+    "scale e-commerce photography",
+    "AI fashion technology ROI",
+    "virtual model generator",
+    "clothing visualization platform",
+    "fashion tech automation",
+    "product photography automation",
+    "e-commerce conversion optimization",
+    "fashion catalog software",
+    "virtual clothing try-on",
   ],
   authors: [{ name: "TryMyLook AI", url: baseUrl }],
   creator: "TryMyLook AI",
@@ -58,6 +78,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: baseUrl,
+    languages: {
+      "en-US": baseUrl,
+      "x-default": baseUrl,
+    },
   },
   category: "Technology",
   verification: {
@@ -101,13 +125,15 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    nocache: false,
+    nocache: true,
+    noimageindex: false,
     googleBot: {
       index: true,
       follow: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
+      notranslate: false,
     },
   },
   openGraph: {
@@ -115,23 +141,23 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: baseUrl,
     siteName: "TryMyLook AI",
-    title: "TryMyLook AI - Transform E-commerce with AI Virtual Try-Ons",
+    title: "TryMyLook AI - Convert Flatlay to On-Model Photos Instantly",
     description:
-      "Revolutionize your online fashion retail with AI-powered virtual try-ons. Boost sales by 40%, cut returns by 30%, and enhance customer experience.",
+      "Transform product photos into professional on-model images instantly. Create stunning fashion catalogs with AI-powered virtual try-on technology. Perfect for e-commerce brands looking to scale product photography without models.",
     images: [
       {
         url: `${baseUrl}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "TryMyLook AI - Virtual Try-On Platform",
+        alt: "TryMyLook AI - Virtual Try-On & Fashion Catalog Generator",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TryMyLook AI - AI Virtual Try-On Platform",
+    title: "TryMyLook AI - Convert Flatlay to On-Model Photos Instantly",
     description:
-      "Transform your e-commerce with AI virtual try-ons. 40% more sales, 30% fewer returns, 2x engagement.",
+      "Transform product photos into professional on-model images. Create complete fashion catalogs with AI virtual try-on technology. No models needed.",
     images: [`${baseUrl}/opengraph-image`],
     creator: "@trymylook",
     site: "@trymylook",
@@ -141,6 +167,26 @@ export const metadata: Metadata = {
     "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
+    "pinterest-rich-pin": "true",
+    "format-detection": "telephone=no",
+    "pinterest-site-verification": "", // Add your Pinterest verification code if available
+    schema: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "TryMyLook AI",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        ratingCount: "150",
+      },
+    }),
   },
 };
 
@@ -167,6 +213,8 @@ export default async function RootLayout({
             <ClientProvider>{children}</ClientProvider>
           </SessionProvider>
         </div>
+        <GoogleAnalytics gaId="G-1TG3455LS8" />
+        <Analytics />
       </body>
     </html>
   );
