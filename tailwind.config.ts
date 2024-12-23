@@ -1,4 +1,6 @@
 import animate from "tailwindcss-animate";
+import { type Config } from "tailwindcss";
+import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -86,27 +88,58 @@ const config = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: "0" },
         },
         rainbow: {
           "0%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
           "100%": { backgroundPosition: "0% 50%" },
         },
+        aurora: {
+          from: {
+            backgroundPosition: "50% 50%, 50% 50%",
+          },
+          to: {
+            backgroundPosition: "350% 50%, 350% 50%",
+          },
+        },
+        gradient: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         rainbow: "rainbow 3s linear infinite",
+        aurora: "aurora 60s linear infinite",
+        gradient: "gradient 8s linear infinite",
       },
     },
   },
-  plugins: [animate],
-};
+  plugins: [animate, addVariablesForColors],
+} satisfies Config;
+
+// Define proper types for the plugin function
+interface PluginAPI {
+  addBase: (base: Record<string, Record<string, string>>) => void;
+  theme: (path: string) => Record<string, string>;
+}
+
+function addVariablesForColors({ addBase, theme }: PluginAPI) {
+  const allColors = flattenColorPalette(theme("colors"));
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}
 
 export default config;

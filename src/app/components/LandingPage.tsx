@@ -7,8 +7,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp, RefreshCcw, Zap } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import FlickeringGrid from "../components/ui/FlickeringGrid";
 import { GradientText } from "../components/ui/GradientText";
+import { AuroraBackground } from "./ui/aurora-background";
 
 // Add new animation variants for the remaining motion components
 const statCardVariants = {
@@ -91,72 +91,122 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-cool-50">
-      {/* Hero Section - Updated for better mobile responsiveness */}
-      <section className="relative min-h-[100vh] flex flex-col justify-center items-center px-4 sm:px-12 text-center overflow-hidden">
-        {/* Background with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/50 via-secondary-50/30 to-cool-50">
-          {/* Bottom fade overlay */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cool-50 to-transparent" />
-        </div>
+      {/* Hero Section */}
+      <AuroraBackground className="relative min-h-screen flex flex-col justify-between">
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 flex-1 flex flex-col">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center space-y-16 sm:space-y-20 mt-32 sm:mt-40"
+          >
+            <div className="space-y-6">
+              <h1 className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight">
+                <span className="block text-primary-600 mb-6">
+                  Increase Your Sales
+                </span>
+                <span className="block text-secondary-500">
+                  with AI Virtual Try-ons
+                </span>
+              </h1>
 
-        {/* Flickering Grid with mask */}
-        <div className="absolute inset-0 z-0">
-          <FlickeringGrid
-            className="absolute inset-0 [mask-image:radial-gradient(600px_circle_at_center,white,transparent)]"
-            squareSize={3}
-            gridGap={5}
-            color="#9333ea"
-            maxOpacity={0.2}
-            flickerChance={0.08}
-            height={1200}
-            width={1200}
-          />
-        </div>
-
-        {/* Content - Simplified animations and improved mobile spacing */}
-        <div className="relative z-10 max-w-6xl mx-auto pt-20 sm:pt-0">
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-500 via-secondary-400 to-accent-400 bg-clip-text text-transparent px-4">
-            Increase Your Sales with AI Virtual Try-ons
-          </h1>
-
-          <p className="text-lg sm:text-xl md:text-2xl text-cool-500 mb-10 sm:mb-16 max-w-2xl mx-auto leading-relaxed px-4">
-            Generate high-quality on-model images from flatlay apparel images
-            within seconds
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-            <Link href="/demo" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                className="w-full sm:w-auto bg-gradient-to-r from-primary-500 to-secondary-400 hover:opacity-90 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 group"
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+                className="text-xl sm:text-2xl md:text-3xl text-cool-500 max-w-3xl mx-auto leading-relaxed font-light"
               >
-                Try Demo{" "}
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+                Generate high-quality on-model images from flatlay apparel
+                images
+                <span className="text-primary-500 font-medium">
+                  {" "}
+                  within seconds
+                </span>
+              </motion.p>
+            </div>
 
-            <Link href="#contact" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:w-auto border-2 border-primary-200 text-primary-600 bg-primary-30 backdrop-blur-sm hover:bg-primary-50 px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold transition-all duration-200"
-              >
-                Contact Sales
-              </Button>
-            </Link>
-          </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="flex flex-col sm:flex-row gap-8 justify-center items-center"
+            >
+              <Link href="/demo">
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto bg-primary-600 hover:bg-primary-500 
+                    text-white px-12 py-7 text-xl font-medium rounded-2xl shadow-lg hover:shadow-xl 
+                    transition-all duration-300 group hover:scale-105 hover:-translate-y-1"
+                >
+                  Try Demo{" "}
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+
+              <Link href="#contact">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto border-2 border-primary-300 text-primary-600 
+                    backdrop-blur-sm hover:bg-primary-50/50 px-12 py-7 text-xl font-medium 
+                    rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                >
+                  Contact Sales
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
 
-        {/* Scroll indicator - Hidden on mobile */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block">
-          <div className="w-6 h-10 border-2 border-primary-300 rounded-full p-1">
-            <div className="w-1.5 h-1.5 bg-primary-400 rounded-full mx-auto animate-bounce" />
-          </div>
-        </div>
-      </section>
+        {/* Scroll indicator with enhanced animation */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="mb-8 flex flex-col items-center gap-2 hidden sm:flex"
+        >
+          <motion.span
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: [0, 1, 0], y: [0, 0, 5] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatDelay: 1,
+            }}
+            className="text-primary-400 text-sm font-medium tracking-wider"
+          >
+            Discover more
+          </motion.span>
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            className="w-8 h-14 border-2 border-primary-300 rounded-full p-2
+              backdrop-blur-sm bg-white/10 hover:border-primary-400 transition-colors
+              cursor-pointer shadow-lg"
+            onClick={() => {
+              const statsSection = document.querySelector("#stats-section");
+              statsSection?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            <motion.div
+              className="w-2 h-2 bg-primary-400 rounded-full mx-auto"
+              animate={{
+                y: [0, 24, 0],
+                opacity: [0.5, 1, 0.5],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </motion.div>
+        </motion.div>
+      </AuroraBackground>
 
       {/* Stats Section */}
       <motion.section
+        id="stats-section"
         className="py-20 bg-white"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -224,7 +274,7 @@ export default function LandingPage() {
       </motion.section>
 
       {/* Features Section with Multiple Examples */}
-      <section className="py-20 px-12 bg-gradient-to-b from-white to-cool-50">
+      <section className="py-20 px-4 sm:px-8 bg-gradient-to-b from-white to-cool-50 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <motion.h2
             className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-primary-500 to-secondary-400 bg-clip-text text-transparent"
@@ -236,9 +286,9 @@ export default function LandingPage() {
           </motion.h2>
 
           {/* Example 1: Enhanced Customer Experience */}
-          <div className="grid md:grid-cols-2 gap-16 items-center mb-32">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center mb-32">
             <motion.div
-              className="rounded-2xl overflow-hidden shadow-2xl"
+              className="w-full rounded-2xl overflow-hidden shadow-2xl"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -274,7 +324,7 @@ export default function LandingPage() {
           </div>
 
           {/* Example 2: Increased Conversion */}
-          <div className="grid md:grid-cols-2 gap-16 items-center mb-32">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center mb-32">
             <motion.div
               className="space-y-6 order-2 md:order-1"
               initial={{ opacity: 0, x: -50 }}
@@ -310,7 +360,7 @@ export default function LandingPage() {
           </div>
 
           {/* Example 3: Reduced Returns */}
-          <div className="grid md:grid-cols-2 gap-16 items-center mb-32">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center mb-32">
             <motion.div
               className="rounded-2xl overflow-hidden shadow-2xl"
               initial={{ opacity: 0, x: -50 }}
@@ -345,7 +395,7 @@ export default function LandingPage() {
           </div>
 
           {/* Example 4: Stand Out */}
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             <motion.div
               className="space-y-6 order-2 md:order-1"
               initial={{ opacity: 0, x: -50 }}
