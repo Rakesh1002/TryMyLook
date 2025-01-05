@@ -36,14 +36,14 @@ async function makeApiRequest(
     body: data ? JSON.stringify(data) : undefined,
   };
 
-  console.log("Request URL:", url);
-  console.log("Request Headers:", headers);
-  console.log("Request Body:", data);
+  // console.log("Request URL:", url);
+  // console.log("Request Headers:", headers);
+  // console.log("Request Body:", data);
 
   const response = await fetch(url, options);
   const responseBody = await response.text();
-  console.log("Response Status:", response.status);
-  console.log("Response Body:", responseBody);
+  // console.log("Response Status:", response.status);
+  // console.log("Response Body:", responseBody);
 
   if (!response.ok) {
     console.error(
@@ -61,9 +61,9 @@ async function blobToBase64(blob: Blob): Promise<string> {
   return buffer.toString("base64");
 }
 async function virtualTryOn(modelImage: Blob, apparelImage: Blob) {
-  console.log("Starting virtual try-on process");
-  console.log("Model image size:", modelImage.size);
-  console.log("Apparel image size:", apparelImage.size);
+  // console.log("Starting virtual try-on process");
+  // console.log("Model image size:", modelImage.size);
+  // console.log("Apparel image size:", apparelImage.size);
 
   const modelImageBase64 = await blobToBase64(modelImage);
   const apparelImageBase64 = await blobToBase64(apparelImage);
@@ -75,18 +75,18 @@ async function virtualTryOn(modelImage: Blob, apparelImage: Blob) {
     cloth_image: apparelImageBase64,
   };
 
-  console.log("Sending task data:", {
-    ...taskData,
-    human_image: "[BASE64_STRING]",
-    cloth_image: "[BASE64_STRING]",
-  });
+  // console.log("Sending task data:", {
+  //   ...taskData,
+  //   human_image: "[BASE64_STRING]",
+  //   cloth_image: "[BASE64_STRING]",
+  // });
 
   const taskResponse = await makeApiRequest(
     createTaskEndpoint,
     "POST",
     taskData
   );
-  console.log("Task creation response:", taskResponse);
+  // console.log("Task creation response:", taskResponse);
 
   const taskId = taskResponse.data?.task_id;
   if (!taskId) {
@@ -110,7 +110,7 @@ async function virtualTryOn(modelImage: Blob, apparelImage: Blob) {
   ) {
     try {
       const statusResponse = await makeApiRequest(queryTaskEndpoint, "GET");
-      console.log("Task status response:", statusResponse);
+      // console.log("Task status response:", statusResponse);
 
       taskStatus = statusResponse.data?.task_status;
       taskResult = statusResponse.data?.task_result;
@@ -124,10 +124,10 @@ async function virtualTryOn(modelImage: Blob, apparelImage: Blob) {
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     } catch (error) {
-      console.error(
-        `Error checking task status (attempt ${retryCount + 1}):`,
-        error
-      );
+      // console.error(
+      //   `Error checking task status (attempt ${retryCount + 1}):`,
+      //   error
+      // );
       retryCount++;
       if (retryCount >= maxRetries) {
         throw new Error("Max retries reached while checking task status");
@@ -192,7 +192,7 @@ async function imageToVideo(
   ) {
     try {
       const statusResponse = await makeApiRequest(queryTaskEndpoint, "GET");
-      console.log("Task status response:", statusResponse);
+      // console.log("Task status response:", statusResponse);
 
       taskStatus = statusResponse.data?.task_status;
       taskResult = statusResponse.data?.task_result;

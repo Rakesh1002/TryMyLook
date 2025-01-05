@@ -11,48 +11,47 @@ import { useDemoStore } from "@/store/demoStore";
 
 const modelImages = {
   male: [
-    "/images/models/male/1.png",
-    "/images/models/male/9.png",
-    "/images/models/male/3.png",
-    "/images/models/male/4.png",
-    "/images/models/male/5.png",
-    "/images/models/male/6.png",
-    "/images/models/male/7.png",
-    "/images/models/male/8.png",
+    "/images/models/male/1.jpeg",
+    "/images/models/male/2.jpeg",
+    "/images/models/male/3.jpeg",
+    "/images/models/male/4.jpeg",
+    "/images/models/male/5.jpeg",
+    "/images/models/male/6.jpeg",
+    "/images/models/male/7.jpeg",
+    "/images/models/male/8.jpeg",
   ],
   female: [
-    "/images/models/female/1.png",
-    "/images/models/female/9.png",
-    "/images/models/female/3.png",
-    "/images/models/female/11.png",
-    "/images/models/female/5.png",
-    "/images/models/female/10.png",
-    "/images/models/female/12.png",
-    "/images/models/female/8.png",
+    "/images/models/female/1.jpeg",
+    "/images/models/female/2.jpeg",
+    "/images/models/female/3.jpeg",
+    "/images/models/female/4.jpeg",
+    "/images/models/female/5.jpeg",
+    "/images/models/female/6.jpeg",
+    "/images/models/female/7.jpeg",
+    "/images/models/female/8.jpeg",
   ],
 };
 
 const apparelImages = {
-  dress: [
-    "/images/apparel/dress/1.png",
-    "/images/apparel/dress/2.png",
-    "/images/apparel/dress/3.png",
+  male: [
+    "/images/apparel/male/1.jpeg",
+    "/images/apparel/male/2.jpeg",
+    "/images/apparel/male/3.jpeg",
+    "/images/apparel/male/4.jpeg",
+    "/images/apparel/male/5.jpeg",
+    "/images/apparel/male/6.jpeg",
+    "/images/apparel/male/7.jpeg",
+    "/images/apparel/male/8.jpeg",
   ],
-  upper: [
-    "/images/apparel/upper/1.png",
-    "/images/apparel/upper/2.png",
-    "/images/apparel/upper/3.png",
-    "/images/apparel/upper/4.png",
-    "/images/apparel/upper/5.png",
-    "/images/apparel/upper/6.png",
-    "/images/apparel/upper/7.png",
-    "/images/apparel/upper/8.png",
-  ],
-  lower: [
-    "/images/apparel/lower/1.png",
-    "/images/apparel/lower/2.png",
-    "/images/apparel/lower/3.png",
-    "/images/apparel/lower/4.png",
+  female: [
+    "/images/apparel/female/1.jpeg",
+    "/images/apparel/female/2.jpeg",
+    "/images/apparel/female/3.jpeg",
+    "/images/apparel/female/4.jpeg",
+    "/images/apparel/female/5.jpeg",
+    "/images/apparel/female/6.jpeg",
+    "/images/apparel/female/7.jpeg",
+    "/images/apparel/female/8.jpeg",
   ],
 };
 
@@ -65,8 +64,8 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
     "male"
   );
   const [selectedApparelType, setSelectedApparelType] = useState<
-    "upper" | "lower" | "dress"
-  >("upper");
+    "male" | "female"
+  >("male");
   const [modelImage, setModelImage] = useState<File | null>(null);
   const [apparelImage, setApparelImage] = useState<File | null>(null);
   const [selectedModelPreview, setSelectedModelPreview] = useState<string>("");
@@ -291,7 +290,7 @@ export default function TryOnForm({ onResult }: TryOnFormProps) {
                 Or Select Sample Apparel
               </p>
               <div className="flex flex-wrap gap-1.5 mb-4 justify-center">
-                {["upper", "lower", "dress"].map((type) => (
+                {["male", "female"].map((type) => (
                   <Button
                     key={type}
                     variant={

@@ -294,8 +294,8 @@ export default function LandingPage() {
               viewport={{ once: true }}
             >
               <BeforeAfterSlider
-                beforeImage="/images/models/male/3.png"
-                afterImage="/images/models/male/3_after.jpg"
+                beforeImage="/images/apparel/male/3.jpeg"
+                afterImage="/images/apparel/male/3_after_male.png"
               />
             </motion.div>
             <motion.div
@@ -353,8 +353,8 @@ export default function LandingPage() {
               viewport={{ once: true }}
             >
               <BeforeAfterSlider
-                beforeImage="/images/models/female/12.png"
-                afterImage="/images/models/female/12_after.jpg"
+                beforeImage="/images/apparel/female/1.jpeg"
+                afterImage="/images/apparel/female/1_after_female.png"
               />
             </motion.div>
           </div>
@@ -368,8 +368,8 @@ export default function LandingPage() {
               viewport={{ once: true }}
             >
               <BeforeAfterSlider
-                beforeImage="/images/models/male/4.png"
-                afterImage="/images/models/male/4_after.jpg"
+                beforeImage="/images/apparel/male/8.jpeg"
+                afterImage="/images/apparel/male/8_after_male.png"
               />
             </motion.div>
             <motion.div
@@ -424,8 +424,8 @@ export default function LandingPage() {
               viewport={{ once: true }}
             >
               <BeforeAfterSlider
-                beforeImage="/images/models/female/11.png"
-                afterImage="/images/models/female/11_after.jpg"
+                beforeImage="/images/apparel/female/4.jpeg"
+                afterImage="/images/apparel/female/4_after_female.png"
               />
             </motion.div>
           </div>

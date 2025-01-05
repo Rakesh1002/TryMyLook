@@ -6,7 +6,7 @@ import { createDemo } from "@/app/actions/demo";
 export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
-  console.log("Received POST request to /api/try-on");
+  // console.log("Received POST request to /api/try-on");
   const formData = await request.formData();
   const requestType = formData.get("requestType") as string;
 
@@ -37,8 +37,8 @@ export async function POST(request: NextRequest) {
     const modelImage = formData.get("modelImage") as Blob;
     const apparelImage = formData.get("apparelImage") as Blob;
 
-    console.log("Model image size:", modelImage?.size);
-    console.log("Apparel image size:", apparelImage?.size);
+    // console.log("Model image size:", modelImage?.size);
+    // console.log("Apparel image size:", apparelImage?.size);
 
     if (!modelImage || !apparelImage) {
       return NextResponse.json(
@@ -48,9 +48,9 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      console.log("Calling virtualTryOn function");
+      // console.log("Calling virtualTryOn function");
       const result = await virtualTryOn(modelImage, apparelImage);
-      console.log("Virtual try-on result:", result);
+      // console.log("Virtual try-on result:", result);
 
       // Return result with remaining tries
       return NextResponse.json(
@@ -93,12 +93,12 @@ export async function POST(request: NextRequest) {
     const mode = formData.get("mode") as "std" | "pro";
     const duration = formData.get("duration") as "5" | "10";
 
-    console.log("Image size:", image?.size);
-    console.log("Prompt:", prompt);
-    console.log("Negative Prompt:", negativePrompt);
-    console.log("CFG Scale:", cfgScale);
-    console.log("Mode:", mode);
-    console.log("Duration:", duration);
+    // console.log("Image size:", image?.size);
+    // console.log("Prompt:", prompt);
+    // console.log("Negative Prompt:", negativePrompt);
+    // console.log("CFG Scale:", cfgScale);
+    // console.log("Mode:", mode);
+    // console.log("Duration:", duration);
 
     if (!image || !prompt) {
       return NextResponse.json(
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      console.log("Calling imageToVideo function");
+      // console.log("Calling imageToVideo function");
       const result = await imageToVideo(
         image,
         prompt,
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
         duration,
         negativePrompt
       );
-      console.log("Image to video result:", result);
+      // console.log("Image to video result:", result);
       return NextResponse.json({ result });
     } catch (error) {
       console.error("Image to video generation failed:", error);

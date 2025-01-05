@@ -9,30 +9,40 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function Image() {
+  // Load the images using absolute paths
+  const baseUrl = process.env.VERCEL_URL 
+    ? `https://${process.env.VERCEL_URL}` 
+    : process.env.NODE_ENV === 'development' 
+      ? 'http://localhost:3000'
+      : 'https://trymylook.xyz';
+
+  const beforeImage: string = `${baseUrl}/images/apparel/female/1.jpeg`;
+  const afterImage: string = `${baseUrl}/images/apparel/female/1_after_female.png`;
+
   return new ImageResponse(
     (
       <div
         style={{
-          background: "linear-gradient(135deg, #4F46E5, #9333EA, #EC4899)",
+          background: "linear-gradient(135deg, #f6f8fd, #eef2ff, #f3e8ff)",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          padding: "48px",
+          justifyContent: "space-between",
+          padding: "32px",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Background Pattern */}
+        {/* Subtle Background Pattern */}
         <div
           style={{
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%)",
-            opacity: 0.6,
+              "radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 70%)",
+            opacity: 0.8,
           }}
         />
 
@@ -44,8 +54,9 @@ export default async function Image() {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            gap: "32px",
+            gap: "24px",
             position: "relative",
+            width: "100%",
           }}
         >
           {/* Logo Section */}
@@ -54,22 +65,23 @@ export default async function Image() {
               display: "flex",
               alignItems: "center",
               gap: "16px",
-              marginBottom: "16px",
+              marginBottom: "8px",
             }}
           >
             <div
               style={{
-                background: "linear-gradient(to right, #9333EA, #06b6d4)",
-                padding: "16px",
-                borderRadius: "16px",
+                background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                padding: "12px",
+                borderRadius: "12px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                boxShadow: "0 4px 6px rgba(99, 102, 241, 0.1)",
               }}
             >
               <svg
-                width="48"
-                height="48"
+                width="32"
+                height="32"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="white"
@@ -82,8 +94,8 @@ export default async function Image() {
             </div>
             <div
               style={{
-                color: "white",
-                fontSize: "64px",
+                color: "#1f2937",
+                fontSize: "36px",
                 fontWeight: "700",
                 lineHeight: "1",
                 letterSpacing: "-0.02em",
@@ -93,85 +105,162 @@ export default async function Image() {
             </div>
           </div>
 
+          {/* Before & After Container */}
+          <div
+            style={{
+              display: "flex",
+              gap: "32px",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              maxWidth: "800px",
+            }}
+          >
+            {/* Before Image Container */}
+            <div
+              style={{
+                background: "white",
+                padding: "8px",
+                borderRadius: "16px",
+                width: "250px",
+                height: "350px",
+                position: "relative",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {/* Before Label */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "-20px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  background: "#4f46e5",
+                  color: "white",
+                  padding: "4px 16px",
+                  borderRadius: "16px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  zIndex: 10,
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Before
+              </div>
+              <img
+                src={beforeImage}
+                alt="Flatlay Image"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                }}
+              />
+            </div>
+
+            {/* Arrow */}
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="#4f46e5"
+              stroke="#4f46e5"
+              strokeWidth="2"
+              style={{
+                filter: "drop-shadow(0 2px 2px rgba(79, 70, 229, 0.1))",
+              }}
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+
+            {/* After Image Container */}
+            <div
+              style={{
+                background: "white",
+                padding: "8px",
+                borderRadius: "16px",
+                width: "250px",
+                height: "350px",
+                position: "relative",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {/* After Label */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "-20px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  background: "#4f46e5",
+                  color: "white",
+                  padding: "4px 16px",
+                  borderRadius: "16px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  zIndex: 10,
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                After
+              </div>
+              <img
+                src={afterImage}
+                alt="On-Model Image"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                }}
+              />
+            </div>
+          </div>
+
           {/* Main Headline */}
           <p
             style={{
-              fontSize: "36px",
-              color: "white",
-              maxWidth: "900px",
+              fontSize: "20px",
+              color: "#1f2937",
+              maxWidth: "800px",
               lineHeight: 1.2,
-              marginBottom: "24px",
-              background: "rgba(0, 0, 0, 0.2)",
+              background: "white",
               padding: "16px 32px",
-              borderRadius: "12px",
+              borderRadius: "16px",
               fontWeight: "600",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "16",
             }}
           >
             Convert Flatlay Apparel Images to On-Model Photos Instantly
           </p>
-
-          {/* Features Container */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-              maxWidth: "900px",
-              gap: "16px",
-            }}
-          >
-            {[
-              ["40% Higher", "Conversion Rate"],
-              ["30% Fewer", "Returns"],
-              ["2x Customer", "Engagement"],
-            ].map(([top, bottom]) => (
-              <div
-                key={top}
-                style={{
-                  background: "rgba(255, 255, 255, 0.1)",
-                  padding: "20px",
-                  borderRadius: "12px",
-                  width: "30%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "32px",
-                    fontWeight: "700",
-                    color: "white",
-                    marginBottom: "4px",
-                  }}
-                >
-                  {top}
-                </div>
-                <div
-                  style={{
-                    fontSize: "20px",
-                    color: "rgba(255, 255, 255, 0.8)",
-                    fontWeight: "500",
-                  }}
-                >
-                  {bottom}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
+
         {/* Bottom Tag */}
         <div
           style={{
             position: "absolute",
-            bottom: "20px",
-            right: "20px",
-            background: "rgba(0, 0, 0, 0.2)",
-            padding: "4px 8px",
-            borderRadius: "20px",
-            color: "rgba(255, 255, 255, 0.8)",
-            fontSize: "16px",
+            bottom: "16px",
+            right: "16px",
+            background: "white",
+            padding: "4px 12px",
+            borderRadius: "16px",
+            color: "#6366f1",
+            fontSize: "14px",
             fontWeight: "500",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
+            display: "flex",
+            alignItems: "center",
           }}
         >
           trymylook.xyz

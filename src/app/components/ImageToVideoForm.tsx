@@ -73,7 +73,7 @@ export default function ImageToVideoForm() {
       }
 
       const data = await response.json();
-      console.log("API Response:", JSON.stringify(data, null, 2));
+      // console.log("API Response:", JSON.stringify(data, null, 2));
 
       if (data.result) {
         setResultUrl(data.result);

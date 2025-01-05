@@ -19,12 +19,12 @@ export async function GET() {
     }
 
     const remaining = Math.max(0, user.demoLimit - user.demoUsed);
-    console.log("Demo count for user:", {
-      email: session.user.email,
-      limit: user.demoLimit,
-      used: user.demoUsed,
-      remaining,
-    });
+    // console.log("Demo count for user:", {
+    //   email: session.user.email,
+    //   limit: user.demoLimit,
+    //   used: user.demoUsed,
+    //   remaining,
+    // });
 
     return NextResponse.json({ remaining });
   } catch (error) {

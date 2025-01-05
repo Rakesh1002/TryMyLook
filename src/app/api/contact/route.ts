@@ -227,7 +227,7 @@ export async function POST(req: Request) {
             },
             saveToSentItems: true,
           });
-        console.log("Confirmation email sent successfully");
+        // console.log("Confirmation email sent successfully");
       } catch (userEmailError) {
         console.error("Failed to send confirmation email to user:", {
           error: userEmailError,
@@ -240,7 +240,7 @@ export async function POST(req: Request) {
         });
       }
 
-      console.log("Email processing completed");
+      // console.log("Email processing completed");
       return NextResponse.json({
         success: true,
         message: "Thank you for your message. We will get back to you soon!",

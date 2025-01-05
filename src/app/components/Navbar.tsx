@@ -43,7 +43,7 @@ export default function Navbar() {
 
   // Force refetch when component mounts, pathname changes, or refetch function changes
   useEffect(() => {
-    console.log("Navbar: Fetching demo count..."); // Debug log
+    // console.log("Navbar: Fetching demo count..."); // Debug log
     fetchRemainingDemos();
   }, [pathname]); // Add refetch to dependencies
 
