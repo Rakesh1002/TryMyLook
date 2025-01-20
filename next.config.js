@@ -6,6 +6,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'trymylook.xyz',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'googleusercontent.com',
+      }
     ],
   },
   webpack: (config, { dev }) => {

@@ -355,6 +355,10 @@ const getEmailTemplate = ({ recipientName = "Fashion Brand Leader" }: EmailTempl
         © 2024 TryMyLook AI. All rights reserved.<br>
         Made with ❤️ in India
       </p>
+      <p>
+        You received this email because you signed up for TryMyLook AI updates. 
+        <a href="{$unsubscribe_link}" style="color: #4F46E5; text-decoration: underline;">Unsubscribe</a>
+      </p>
     </div>
   </div>
 </body>
