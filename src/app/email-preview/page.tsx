@@ -1,27 +1,18 @@
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "TryMyLook AI - Transform Your Fashion Photography",
-  description: "Revolutionary AI-powered virtual try-on solution for fashion brands",
-};
-
-export default function EmailPreview() {
-  return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        <div dangerouslySetInnerHTML={{ __html: emailTemplate }} />
-      </div>
-    </div>
-  );
+interface EmailTemplateProps {
+  recipientName?: string;
 }
 
-const emailTemplate = `
+const getEmailTemplate = ({ recipientName = "Fashion Brand Leader" }: EmailTemplateProps) => `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Transform Your Fashion Photography with TryMyLook AI</title>
+  <meta name="subject" content="🚀 Cut Your Product Photography Costs by 90% | AI-Powered On-Model Photos">
+  <meta name="description" content="Transform flatlay images into professional on-model photos instantly. No models, no studio, no waiting. Starting at just ₹100/image.">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -84,14 +75,14 @@ const emailTemplate = `
     .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
+      gap: 16px;
       margin: 40px auto;
       max-width: 800px;
-      padding: 0 20px;
+      padding: 0 16px;
     }
     .feature {
       text-align: center;
-      padding: 32px 24px;
+      padding: 20px 12px;
       background: #f8fafc;
       border-radius: 16px;
       transition: transform 0.2s, box-shadow 0.2s;
@@ -99,26 +90,28 @@ const emailTemplate = `
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      min-width: 0; /* Prevent overflow */
     }
     .feature:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 24px -8px rgba(79, 70, 229, 0.15);
     }
     .feature img {
-      width: 64px;
-      height: 64px;
-      margin-bottom: 20px;
+      width: min(64px, 15vw);
+      height: min(64px, 15vw);
+      margin-bottom: 16px;
     }
     .feature h3 {
       color: #4F46E5;
-      margin: 0 0 12px 0;
-      font-size: 20px;
+      margin: 0 0 8px 0;
+      font-size: clamp(14px, 3vw, 20px);
+      white-space: nowrap;
     }
     .feature p {
       color: #64748b;
       margin: 0;
-      font-size: 16px;
-      line-height: 1.5;
+      font-size: clamp(12px, 2.5vw, 16px);
+      line-height: 1.4;
     }
     .comparison {
       margin: 32px 0;
@@ -238,6 +231,12 @@ const emailTemplate = `
   </style>
 </head>
 <body>
+  <div style="display: none; max-height: 0px; overflow: hidden;">
+    Transform flatlay images into professional on-model photos instantly. No models, no studio, no waiting. Starting at just ₹100/image. ✨
+  </div>
+  <div style="display: none; max-height: 0px; overflow: hidden;">
+    ‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;
+  </div>
   <div class="container">
     <div class="header">
       <div class="logo-container">
@@ -253,8 +252,8 @@ const emailTemplate = `
     </div>
 
     <div class="content">
-      <p style="font-size: 18px;">Dear Fashion Brand Leader,</p>
-
+      <p style="font-size: 18px;">Dear ${recipientName},</p>
+      <br>
       <p>Are traditional photoshoots holding back your business growth? We're excited to introduce you to <strong>TryMyLook AI</strong> – your solution to creating professional on-model photography at a fraction of the cost and time.</p>
 
       <div class="image-comparison">
@@ -292,17 +291,17 @@ const emailTemplate = `
       
       <div class="features-grid">
         <div class="feature">
-          <img src="https://trymylook.xyz/images/icons/speed.svg" alt="Speed">
+          <img src="https://trymylook.xyz/images/icons/speed.png" alt="Speed">
           <h3>Lightning Fast</h3>
           <p>Get results in minutes, not days</p>
         </div>
         <div class="feature">
-          <img src="https://trymylook.xyz/images/icons/savings.svg" alt="Cost">
+          <img src="https://trymylook.xyz/images/icons/savings.png" alt="Cost">
           <h3>Cost-Effective</h3>
           <p>Starting at just ₹100 per image</p>
         </div>
         <div class="feature">
-          <img src="https://trymylook.xyz/images/icons/quality.svg" alt="Quality">
+          <img src="https://trymylook.xyz/images/icons/quality.png" alt="Quality">
           <h3>Studio Quality</h3>
           <p>Professional results every time</p>
         </div>
@@ -360,4 +359,22 @@ const emailTemplate = `
   </div>
 </body>
 </html>
-`; 
+`;
+
+export default function EmailPreview() {
+  // For preview, we can pass a default name or get it from query params
+  const emailTemplate = getEmailTemplate({ recipientName: "Fashion Brand Leader" });
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <div dangerouslySetInnerHTML={{ __html: emailTemplate }} />
+      </div>
+    </div>
+  );
+}
+
+export const metadata: Metadata = {
+  title: "TryMyLook AI - Transform Your Fashion Photography",
+  description: "Revolutionary AI-powered virtual try-on solution for fashion brands",
+}; 
