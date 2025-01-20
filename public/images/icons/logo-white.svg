@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <path d="M12 8C8.13401 8 5 11.134 5 15C5 18.866 8.13401 22 12 22C15.866 22 19 18.866 19 15C19 11.134 15.866 8 12 8ZM3 15C3 10.0294 7.02944 6 12 6C16.9706 6 21 10.0294 21 15C21 19.9706 16.9706 24 12 24C7.02944 24 3 19.9706 3 15Z" fill="white"/>
+    <path d="M12 12V15L14 17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <text x="28" y="20" font-family="Arial" font-size="16" font-weight="bold" fill="white">TryMyLook AI</text>
+</svg>
