@@ -10,11 +10,11 @@ export const contentType = "image/png";
 
 export default async function Image() {
   // Load the images using absolute paths
-  const baseUrl = process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}` 
-    : process.env.NODE_ENV === 'development' 
-      ? 'http://localhost:3000'
-      : 'https://trymylook.xyz';
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://trymylook.xyz";
 
   const beforeImage: string = `${baseUrl}/images/apparel/female/1.jpeg`;
   const afterImage: string = `${baseUrl}/images/apparel/female/1_after_female.png`;

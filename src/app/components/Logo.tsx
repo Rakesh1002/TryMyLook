@@ -26,7 +26,9 @@ export const Logo: React.FC<{ className?: string }> = ({ className = "" }) => {
   );
 };
 
-export const LogoWhite: React.FC<{ className?: string }> = ({ className = "" }) => {
+export const LogoWhite: React.FC<{ className?: string }> = ({
+  className = "",
+}) => {
   return (
     <div className={`flex items-center space-x-3 ${className}`}>
       <div className="bg-white/10 p-2 rounded-lg">

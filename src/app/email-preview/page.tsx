@@ -4,7 +4,9 @@ interface EmailTemplateProps {
   recipientName?: string;
 }
 
-const getEmailTemplate = ({ recipientName = "Fashion Brand Leader" }: EmailTemplateProps) => `
+const getEmailTemplate = ({
+  recipientName = "Fashion Brand Leader",
+}: EmailTemplateProps) => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -367,7 +369,9 @@ const getEmailTemplate = ({ recipientName = "Fashion Brand Leader" }: EmailTempl
 
 export default function EmailPreview() {
   // For preview, we can pass a default name or get it from query params
-  const emailTemplate = getEmailTemplate({ recipientName: "Fashion Brand Leader" });
+  const emailTemplate = getEmailTemplate({
+    recipientName: "Fashion Brand Leader",
+  });
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -380,5 +384,6 @@ export default function EmailPreview() {
 
 export const metadata: Metadata = {
   title: "TryMyLook AI - Transform Your Fashion Photography",
-  description: "Revolutionary AI-powered virtual try-on solution for fashion brands",
-}; 
+  description:
+    "Revolutionary AI-powered virtual try-on solution for fashion brands",
+};

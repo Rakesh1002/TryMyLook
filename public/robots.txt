@@ -1,3 +1,12 @@
 User-agent: *
 Allow: /
-Sitemap: https://trymylook.xyz/sitemap.xml 
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /auth/
+Disallow: /*.json$
+Allow: /sitemap.xml
+Allow: /manifest.json
+
+Sitemap: https://trymylook.xyz/sitemap.xml
+Host: https://trymylook.xyz 
