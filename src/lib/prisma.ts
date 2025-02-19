@@ -1,30 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { Pool } from "@neondatabase/serverless";
-import { PrismaNeon } from "@prisma/adapter-neon";
 
-let prisma: PrismaClient;
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
 
-if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient({
-    adapter: new PrismaNeon(
-      new Pool({ connectionString: process.env.DATABASE_URL })
-    ),
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["query"] : [],
   });
-} else {
-  // In development, use a global variable to prevent multiple instances
-  const globalForPrisma = global as unknown as {
-    prisma: PrismaClient | undefined;
-  };
 
-  if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = new PrismaClient({
-      adapter: new PrismaNeon(
-        new Pool({ connectionString: process.env.DATABASE_URL })
-      ),
-      log: ["query"],
-    });
-  }
-  prisma = globalForPrisma.prisma;
-}
-
-export { prisma };
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
