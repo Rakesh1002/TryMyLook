@@ -4,7 +4,7 @@ export default function DebugOpenGraph() {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">OpenGraph Image Debug</h1>
-      
+
       <div className="border rounded-lg p-4 bg-gray-50">
         <h2 className="text-lg font-semibold mb-2">Current OpenGraph Image:</h2>
         <Image
@@ -21,7 +21,11 @@ export default function DebugOpenGraph() {
         <h2 className="text-lg font-semibold mb-2">Direct URLs:</h2>
         <ul className="space-y-2 text-blue-600">
           <li>
-            <a href="/opengraph-image" target="_blank" rel="noopener noreferrer">
+            <a
+              href="/opengraph-image"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               View OpenGraph Image directly
             </a>
           </li>
@@ -34,4 +38,4 @@ export default function DebugOpenGraph() {
       </div>
     </div>
   );
-} 
+}
