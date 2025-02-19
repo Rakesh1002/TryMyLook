@@ -273,21 +273,19 @@ export const metadata: Metadata = {
     title: "TryMyLook AI - Convert Flatlay to On-Model Photos Instantly",
     description:
       "Transform product photos into professional on-model images instantly. Create stunning fashion catalogs with AI-powered virtual try-on technology. Perfect for e-commerce brands looking to scale product photography without models.",
-    images: [
-      {
-        url: `${baseUrl}/opengraph-image.jpg`,
-        width: 1200,
-        height: 630,
-        alt: "TryMyLook AI - Virtual Try-On & Fashion Catalog Generator",
-      },
-    ],
+    images: [{
+      url: '/opengraph-image.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'TryMyLook AI - Convert Flatlay Apparel Images to On-Model Photos Instantly'
+    }],
   },
   twitter: {
     card: "summary_large_image",
     title: "TryMyLook AI - Convert Flatlay to On-Model Photos Instantly",
     description:
       "Transform product photos into professional on-model images. Create complete fashion catalogs with AI virtual try-on technology. No models needed.",
-    images: [`${baseUrl}/opengraph-image.jpg`],
+    images: ['/opengraph-image.jpg'],
     creator: "@trymylook",
     site: "@trymylook",
   },

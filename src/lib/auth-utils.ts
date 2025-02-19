@@ -1,50 +1,23 @@
 "use server";
 
-import { prisma } from "./prisma";
-import { config } from "./config";
-
-export async function upsertUser(userData: {
+type UserData = {
   email: string;
   name?: string | null;
   image?: string | null;
-}) {
-  // Cache key based on email
-  const cacheKey = `user:${userData.email}`;
+};
 
-  // Try to get from cache first
-  const cached = globalThis.__userCache?.get(cacheKey);
-  if (cached) {
-    return cached;
-  }
-
-  const user = await prisma.user.upsert({
-    where: { email: userData.email },
-    update: {
-      name: userData.name,
-      image: userData.image,
-      demoLimit: config.demoLimit,
-      lastDemoReset: new Date(),
+export async function upsertUser(userData: UserData) {
+  const response = await fetch("/api/auth/user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    create: {
-      email: userData.email,
-      name: userData.name,
-      image: userData.image,
-      demoLimit: config.demoLimit,
-      demoUsed: 0,
-      lastDemoReset: new Date(),
-    },
+    body: JSON.stringify(userData),
   });
 
-  // Initialize cache if needed
-  if (!globalThis.__userCache) {
-    globalThis.__userCache = new Map();
+  if (!response.ok) {
+    throw new Error("Failed to upsert user");
   }
 
-  // Cache for 5 minutes
-  globalThis.__userCache.set(cacheKey, user);
-  setTimeout(() => {
-    globalThis.__userCache?.delete(cacheKey);
-  }, 5 * 60 * 1000);
-
-  return user;
+  return response.json();
 }
