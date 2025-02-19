@@ -2,8 +2,6 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { upsertUser } from "./lib/auth-utils";
 
-export const runtime = "edge";
-
 if (!process.env.AUTH_SECRET) {
   throw new Error("AUTH_SECRET is not defined");
 }
