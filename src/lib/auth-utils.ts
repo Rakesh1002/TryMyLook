@@ -7,7 +7,8 @@ type UserData = {
 };
 
 export async function upsertUser(userData: UserData) {
-  const response = await fetch("/api/auth/user", {
+  const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+  const response = await fetch(`${baseUrl}/api/auth/user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -14,61 +14,58 @@ type DemoResponse = {
   isRateLimit?: boolean;
 };
 
-export async function createDemo(inputImage: string): Promise<DemoResponse> {
+export async function createDemo(): Promise<DemoResponse> {
   try {
     const session = await auth();
     if (!session?.user?.email) {
-      throw new Error("Not authenticated");
+      return { success: false, error: "Not authenticated" };
     }
 
-    // Get current user
     const user = await getCurrentUser();
     if (!user) {
-      throw new Error("Failed to get user record");
+      return { success: false, error: "User not found" };
     }
 
-    // Check rate limit before proceeding
-    await checkAndUpdateRateLimit();
+    // Check rate limit
+    try {
+      await checkAndUpdateRateLimit();
+    } catch (error) {
+      if (error instanceof RateLimitError) {
+        return {
+          success: false,
+          error: error.message,
+          isRateLimit: true,
+          remainingTries: 0,
+        };
+      }
+      throw error;
+    }
 
-    // Create demo record and update user's demo count in a transaction
+    // Create demo record and increment usage in a transaction
     const [demo, updatedUser] = await prisma.$transaction([
       prisma.demo.create({
         data: {
           userId: user.id,
-          inputImage,
-          outputImage: "", // Will be updated after processing
-          status: "PENDING" as Status,
+          inputImage: "",
+          outputImage: "",
+          status: "PENDING",
         },
       }),
       prisma.user.update({
         where: { id: user.id },
-        data: {
-          demoUsed: {
-            increment: 1,
-          },
-        },
+        data: { demoUsed: { increment: 1 } },
+        select: { demoLimit: true, demoUsed: true },
       }),
     ]);
 
     return {
       success: true,
       demoId: demo.id,
-      remainingTries: updatedUser.demoLimit - updatedUser.demoUsed,
+      remainingTries: Math.max(0, updatedUser.demoLimit - updatedUser.demoUsed),
     };
   } catch (error) {
-    if (error instanceof RateLimitError) {
-      return {
-        success: false,
-        error: error.message,
-        isRateLimit: true,
-      };
-    }
-
-    return {
-      success: false,
-      error: "Failed to create demo",
-      isRateLimit: false,
-    };
+    console.error("Failed to create demo:", error);
+    return { success: false, error: "Failed to create demo record" };
   }
 }
 
